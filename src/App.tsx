@@ -6,10 +6,12 @@ import 'firebase/firestore' // <- needed if using firestore
 import { createStore, combineReducers, compose } from 'redux'
 import { ReactReduxFirebaseProvider, firebaseReducer } from 'react-redux-firebase'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
+import { BrowserRouter } from 'react-router-dom';
 
-import Auth from "./auth/Auth";
-import Boards from "./boards/Boards";
+import Auth from "./base/auth/Auth";
+import Boards from "./base/boards/Boards";
 import { firebaseConfig } from './config';
+import Routes from './pages';
 
 const rrfConfig = {
     // userProfile: 'users',
@@ -47,10 +49,11 @@ const rrfProps = {
 function App() {
   return (
       <Provider store={store}>
-        <ReactReduxFirebaseProvider {...rrfProps}>
-            <Auth />
-            <Boards />
-        </ReactReduxFirebaseProvider>
+          <BrowserRouter>
+              <ReactReduxFirebaseProvider {...rrfProps}>
+                  <Routes />
+              </ReactReduxFirebaseProvider>
+          </BrowserRouter>
       </Provider>
   );
 }

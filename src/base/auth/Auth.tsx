@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 
-import { state } from '../types';
+import { state } from '../../types';
 
 const LoginPage = () => {
     const firebase = useFirebase();
