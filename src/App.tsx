@@ -7,9 +7,8 @@ import { createStore, combineReducers, compose } from 'redux'
 import { ReactReduxFirebaseProvider, firebaseReducer } from 'react-redux-firebase'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
 import { BrowserRouter } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css'
 
-import Auth from "./base/auth/Auth";
-import Boards from "./base/boards/Boards";
 import { firebaseConfig } from './config';
 import Routes from './pages';
 
