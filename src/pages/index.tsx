@@ -1,8 +1,34 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router';
+import { useSelector } from "react-redux";
 
+import { state } from "../types";
 const Login = lazy(() => import('./Login'));
 const Boards = lazy(() => import('./Boards'));
+const BoardTasks = lazy(() => import('./BoardTasks'));
+
+type privateRoute = {
+    component: any;
+    [x:string]: any;
+}
+
+const PrivateRoute = ({ component: Component, ...rest }: privateRoute) => {
+
+    const { auth: { uid, isLoaded } } = useSelector((state: state) => state.firebase);
+
+    if (!uid && isLoaded) {
+        return <Redirect {...rest} to='/login' />
+    } else if (!isLoaded) {
+        return <span>Loading</span>
+    } else {
+        return (
+            <Route {...rest} render={(props) => (
+                <Component {...props} />
+            )}
+            />
+        )
+    }
+};
 
 const Routes = () => (
     <Suspense fallback={'loading'}>
@@ -12,20 +38,16 @@ const Routes = () => (
                 path={'/login'}
                 component={Login}
             />
-            <Route
+            <PrivateRoute
                 exact
-                path={'/'}
+                path={'/boards'}
                 component={Boards}
             />
-            {/*<PrivateRoute*/}
-            {/*    path="/hint"*/}
-            {/*    component={Hint}*/}
-            {/*/>*/}
-            {/*<PrivateRoute*/}
-            {/*    exact*/}
-            {/*    from='/'*/}
-            {/*    component={RedirectToBots}*/}
-            {/*/>*/}
+            <PrivateRoute
+                exact
+                path={'/boards/:boardId/tasks'}
+                component={BoardTasks}
+            />
         </Switch>
     </Suspense>
 );

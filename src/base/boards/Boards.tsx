@@ -1,8 +1,10 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useFirestoreConnect, useFirestore } from 'react-redux-firebase'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect, useFirestore } from 'react-redux-firebase';
 
 import { state } from '../../types';
+import { Link } from 'react-router-dom';
+
 
 const Boards = () => {
     useFirestoreConnect([
@@ -17,13 +19,10 @@ const Boards = () => {
             name: 'name',
             description: 'description',
         })
-    }
-
-
+    };
 
     const { boards } = useSelector((state: state) => state.firestore.data);
-    const tasks = useSelector((state: state) => state.firestore.data[`boards/${'L5hGqvkzgycEah9vlMr3'}/tasks`]);
-    console.log(tasks);
+
     return (
         <div >
             <div>
@@ -33,21 +32,11 @@ const Boards = () => {
                     {
                         boards && Object.keys(boards).map((boardId) => (
                             <li key={boardId}>
-                                <div>{boards[boardId].name}</div>
+                                <div><Link to={`boards/${boardId}/tasks`}>{boards[boardId].name}</Link></div>
                                 <div>{boards[boardId].description}</div>
                             </li>
                         ))
                     }
-                    boards/${'L5hGqvkzgycEah9vlMr3'}/tasks
-                    {
-                        tasks && Object.keys(tasks).map((tasksId) => (
-                            <li key={tasksId}>
-                                <div>{tasks[tasksId].name}</div>
-                                <div>{tasks[tasksId].description}</div>
-                            </li>
-                        ))
-                    }
-
                 </ul>
             </div>
         </div>
