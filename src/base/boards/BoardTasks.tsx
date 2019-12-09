@@ -10,9 +10,12 @@ const BoardTasks = () => {
 
     const { boardId } = useParams();
 
-    useFirestoreConnect([
-        { collection: `boards/${boardId}/tasks` },
-    ]);
+    const { uid } = useSelector((state: state) => state.firebase.auth);
+
+    useFirestoreConnect([{
+        collection: `boards/${boardId}/tasks`,
+        where: ['uid', '==', (uid || '')],
+    }]);
     const tasks = useSelector((state: state) => state.firestore.data[`boards/${boardId}/tasks`]);
 
     if (!tasks) {

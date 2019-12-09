@@ -7,10 +7,13 @@ import { Link } from 'react-router-dom';
 
 
 const Boards = () => {
-    useFirestoreConnect([
-        { collection: 'boards' },
-        { collection: `boards/${'L5hGqvkzgycEah9vlMr3'}/tasks` },
-    ]);
+
+    const { uid } = useSelector((state: state) => state.firebase.auth);
+
+    useFirestoreConnect([{
+        collection: 'boards',
+        where: ['uid', '==', (uid || '')],
+    }]);
 
     const firestore = useFirestore();
 

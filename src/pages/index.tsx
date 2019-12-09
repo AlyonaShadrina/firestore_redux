@@ -48,6 +48,7 @@ const Routes = () => (
                 path={'/boards/:boardId/tasks'}
                 component={BoardTasks}
             />
+            <Redirect from="/" to="/boards" />
         </Switch>
     </Suspense>
 );
