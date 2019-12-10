@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { useFirebase } from 'react-redux-firebase'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Grid, Segment, Header } from 'semantic-ui-react'
 import { useFormik } from 'formik';
 
 import { stateType } from '../../types';
+
 
 type CreateUserCredentials = {
     email: string
@@ -26,22 +27,28 @@ const LoginPage = () => {
         }
     }, [uid, isLoaded, history]);
 
-
-    const login = () => firebase.login({
-        email: 'alyon.shadrina@gmail.com',
-        password: '12345678'
-    }).then(() => {
-        history.push('/boards');
-    });
-
-    const formik = useFormik({
+    const formikLogin = useFormik({
         initialValues: {
-            email: 'aaa',
+            email: '',
             password: '',
         },
-        onSubmit: (values: CreateUserCredentials) => firebase.login(values).then(() => {
-            history.push('/boards');
-        }),
+        onSubmit: (values: CreateUserCredentials) => {
+            firebase.login(values).then(() => {
+                history.push('/boards');
+            })
+        },
+    });
+
+    const formikSignup = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        onSubmit: (values: CreateUserCredentials) => {
+            firebase.createUser(values).then(() => {
+                history.push('/boards');
+            })
+        },
     });
 
     if (!isLoaded) {
@@ -49,19 +56,63 @@ const LoginPage = () => {
     }
 
     return (
-        <div>
-            <Form onSubmit={formik.handleSubmit}>
-                <Form.Field>
-                    <label>Email</label>
-                    <input placeholder='email' type="email" />
-                </Form.Field>
-                <Form.Field>
-                    <label>Password</label>
-                    <input placeholder='password' type="text" />
-                </Form.Field>
-                <Button type='submit' onClick={login}>Submit</Button>
-            </Form>
-        </div>
+        <Segment placeholder style={{ minHeight: '100vh' }}>
+            <Grid columns={2} stackable divided>
+                <Grid.Column>
+                    <Header as='h2' textAlign='center'>Login</Header>
+                    <Form onSubmit={formikLogin.handleSubmit}>
+                        <Form.Field>
+                            <label>Email</label>
+                            <input
+                                placeholder='email'
+                                name="email"
+                                type="email"
+                                onChange={formikLogin.handleChange}
+                                value={formikLogin.values.email}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Password</label>
+                            <input
+                                placeholder="password"
+                                type="password"
+                                name="password"
+                                onChange={formikLogin.handleChange}
+                                value={formikLogin.values.password}
+                            />
+                        </Form.Field>
+                        <Button type='submit'>Login</Button>
+                    </Form>
+                </Grid.Column>
+
+                <Grid.Column verticalAlign='middle'>
+                    <Header as='h2' textAlign='center'>Sign up</Header>
+                    <Form onSubmit={formikSignup.handleSubmit}>
+                        <Form.Field>
+                            <label>Email</label>
+                            <input
+                                placeholder='email'
+                                name="email"
+                                type="email"
+                                onChange={formikSignup.handleChange}
+                                value={formikSignup.values.email}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Password</label>
+                            <input
+                                placeholder="password"
+                                type="password"
+                                name="password"
+                                onChange={formikSignup.handleChange}
+                                value={formikSignup.values.password}
+                            />
+                        </Form.Field>
+                        <Button type='submit'>Sign up</Button>
+                    </Form>
+                </Grid.Column>
+            </Grid>
+        </Segment>
     )
 };
 
