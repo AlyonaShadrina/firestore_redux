@@ -28,7 +28,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (uid && isLoaded) {
-            redirectToBoards();
+            history.push(ROUTES.boards);
         }
     }, [uid, isLoaded, history]);
 
