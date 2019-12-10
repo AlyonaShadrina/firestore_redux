@@ -3,20 +3,20 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import React from "react";
 
-import { stateType } from "../../types";
+import { firebaseAuth, firestoreData } from '../selectors'
 
 
 const BoardTasks = () => {
 
     const { boardId } = useParams();
 
-    const { uid } = useSelector((state: stateType) => state.firebase.auth);
+    const { uid } = useSelector(firebaseAuth);
 
     useFirestoreConnect([{
         collection: `boards/${boardId}/tasks`,
         where: ['uid', '==', (uid || '')],
     }]);
-    const tasks = useSelector((state: stateType) => state.firestore.data[`boards/${boardId}/tasks`]);
+    const tasks = useSelector(firestoreData)[`boards/${boardId}/tasks`];
 
     if (!tasks) {
         return null

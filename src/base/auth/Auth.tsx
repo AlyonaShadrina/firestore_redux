@@ -5,7 +5,8 @@ import { useFirebase } from 'react-redux-firebase'
 import { Button, Form, Grid, Segment, Header } from 'semantic-ui-react'
 import { useFormik } from 'formik';
 
-import { stateType } from '../../types';
+import { firebaseAuth } from '../selectors'
+import ROUTES from "../../routes";
 
 
 type CreateUserCredentials = {
@@ -16,14 +17,18 @@ type CreateUserCredentials = {
 
 const LoginPage = () => {
     const firebase = useFirebase();
-    const auth = useSelector((state: stateType) => state.firebase.auth);
+    const auth = useSelector(firebaseAuth);
     const history = useHistory();
 
     const { uid, isLoaded } = auth;
 
+    const redirectToBoards = () => {
+        history.push(ROUTES.boards);
+    };
+
     useEffect(() => {
         if (uid && isLoaded) {
-            history.push('/boards');
+            redirectToBoards();
         }
     }, [uid, isLoaded, history]);
 
@@ -32,11 +37,7 @@ const LoginPage = () => {
             email: '',
             password: '',
         },
-        onSubmit: (values: CreateUserCredentials) => {
-            firebase.login(values).then(() => {
-                history.push('/boards');
-            })
-        },
+        onSubmit: (values: CreateUserCredentials) => firebase.login(values).then(redirectToBoards),
     });
 
     const formikSignup = useFormik({
@@ -44,11 +45,7 @@ const LoginPage = () => {
             email: '',
             password: '',
         },
-        onSubmit: (values: CreateUserCredentials) => {
-            firebase.createUser(values).then(() => {
-                history.push('/boards');
-            })
-        },
+        onSubmit: (values: CreateUserCredentials) => firebase.createUser(values).then(redirectToBoards),
     });
 
     if (!isLoaded) {

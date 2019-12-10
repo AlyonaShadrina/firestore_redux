@@ -2,13 +2,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, useFirestore } from 'react-redux-firebase';
 
-import { stateType } from '../../types';
 import { Link } from 'react-router-dom';
+import { firebaseAuth, firestoreData } from '../selectors'
+import ROUTES from "../../routes";
 
 
 const Boards = () => {
 
-    const { uid } = useSelector((state: stateType) => state.firebase.auth);
+    const { uid } = useSelector(firebaseAuth);
 
     useFirestoreConnect([{
         collection: 'boards',
@@ -21,10 +22,11 @@ const Boards = () => {
         firestore.collection('boards').add({
             name: 'name',
             description: 'description',
+            uid,
         })
     };
 
-    const { boards } = useSelector((state: stateType) => state.firestore.data);
+    const { boards } = useSelector(firestoreData);
 
     return (
         <div >
@@ -35,7 +37,7 @@ const Boards = () => {
                     {
                         boards && Object.keys(boards).map((boardId) => (
                             <li key={boardId}>
-                                <div><Link to={`boards/${boardId}/tasks`}>{boards[boardId].name}</Link></div>
+                                <div><Link to={ROUTES.dynamic.boardTasks(boardId)}>{boards[boardId].name}</Link></div>
                                 <div>{boards[boardId].description}</div>
                             </li>
                         ))

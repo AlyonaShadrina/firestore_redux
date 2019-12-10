@@ -2,10 +2,12 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 import { useSelector } from "react-redux";
 
-import { stateType } from "../types";
+import { firebaseAuth } from '../base/selectors';
+import ROUTES from "../routes";
 const Login = lazy(() => import('./Login'));
 const Boards = lazy(() => import('./Boards'));
 const BoardTasks = lazy(() => import('./BoardTasks'));
+
 
 type privateRoute = {
     component: any;
@@ -14,10 +16,10 @@ type privateRoute = {
 
 const PrivateRoute = ({ component: Component, ...rest }: privateRoute) => {
 
-    const { auth: { uid, isLoaded } } = useSelector((state: stateType) => state.firebase);
+    const { uid, isLoaded } = useSelector(firebaseAuth);
 
     if (!uid && isLoaded) {
-        return <Redirect {...rest} to='/login' />
+        return <Redirect {...rest} to={ROUTES.login} />
     } else if (!isLoaded) {
         return <span>Loading</span>
     } else {
@@ -35,20 +37,20 @@ const Routes = () => (
         <Switch>
             <Route
                 exact
-                path={'/login'}
+                path={ROUTES.login}
                 component={Login}
             />
             <PrivateRoute
                 exact
-                path={'/boards'}
+                path={ROUTES.boards}
                 component={Boards}
             />
             <PrivateRoute
                 exact
-                path={'/boards/:boardId/tasks'}
+                path={ROUTES.dynamic.boardTasks()}
                 component={BoardTasks}
             />
-            <Redirect from="/" to="/boards" />
+            <Redirect from="/" to={ROUTES.boards} />
         </Switch>
     </Suspense>
 );
