@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import { useFirebase, isEmpty } from 'react-redux-firebase'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { useFirebase } from 'react-redux-firebase'
+import { Button, Form } from 'semantic-ui-react'
 import { useFormik } from 'formik';
 
-import { state } from '../../types';
+import { stateType } from '../../types';
 
+type CreateUserCredentials = {
+    email: string
+    password: string
+    signIn?: boolean
+}
 
 const LoginPage = () => {
     const firebase = useFirebase();
-    const auth = useSelector((state: state) => state.firebase.auth);
+    const auth = useSelector((state: stateType) => state.firebase.auth);
     const history = useHistory();
 
     const { uid, isLoaded } = auth;
@@ -19,7 +24,7 @@ const LoginPage = () => {
         if (uid && isLoaded) {
             history.push('/boards');
         }
-    }, [uid, isLoaded]);
+    }, [uid, isLoaded, history]);
 
 
     const login = () => firebase.login({
@@ -32,11 +37,9 @@ const LoginPage = () => {
     const formik = useFormik({
         initialValues: {
             email: 'aaa',
+            password: '',
         },
-        onSubmit: values => firebase.login({
-            email: 'alyon.shadrina@gmail.com',
-            password: '12345678'
-        }).then(() => {
+        onSubmit: (values: CreateUserCredentials) => firebase.login(values).then(() => {
             history.push('/boards');
         }),
     });

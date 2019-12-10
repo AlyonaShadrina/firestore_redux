@@ -2,13 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, useFirestore } from 'react-redux-firebase';
 
-import { state } from '../../types';
+import { stateType } from '../../types';
 import { Link } from 'react-router-dom';
 
 
 const Boards = () => {
 
-    const { uid } = useSelector((state: state) => state.firebase.auth);
+    const { uid } = useSelector((state: stateType) => state.firebase.auth);
 
     useFirestoreConnect([{
         collection: 'boards',
@@ -24,7 +24,7 @@ const Boards = () => {
         })
     };
 
-    const { boards } = useSelector((state: state) => state.firestore.data);
+    const { boards } = useSelector((state: stateType) => state.firestore.data);
 
     return (
         <div >

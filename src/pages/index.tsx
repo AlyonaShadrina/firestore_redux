@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 import { useSelector } from "react-redux";
 
-import { state } from "../types";
+import { stateType } from "../types";
 const Login = lazy(() => import('./Login'));
 const Boards = lazy(() => import('./Boards'));
 const BoardTasks = lazy(() => import('./BoardTasks'));
@@ -14,7 +14,7 @@ type privateRoute = {
 
 const PrivateRoute = ({ component: Component, ...rest }: privateRoute) => {
 
-    const { auth: { uid, isLoaded } } = useSelector((state: state) => state.firebase);
+    const { auth: { uid, isLoaded } } = useSelector((state: stateType) => state.firebase);
 
     if (!uid && isLoaded) {
         return <Redirect {...rest} to='/login' />
