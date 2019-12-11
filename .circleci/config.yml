@@ -24,6 +24,8 @@ workflows:
   deploy:
     jobs:
       - deploy-job:
+          requires:
+            - react/build
           filters:
             branches:
               only: master
