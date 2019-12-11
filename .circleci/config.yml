@@ -20,7 +20,7 @@ workflows:
       - react/build:
           requires:
             - react/install
-  - deploy:
+  deploy:
     jobs:
       - deploy-job:
         requires:
