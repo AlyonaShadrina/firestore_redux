@@ -60,7 +60,7 @@ const LoginPage = () => {
         <Segment placeholder style={{ minHeight: '100vh' }}>
             <Grid columns={2} stackable divided>
                 <Grid.Column>
-                    <Header as="h2" textAlign="center" style={{ color: 'red' }}>Login</Header>
+                    <Header as="h2" textAlign="center">Login</Header>
                     <Form onSubmit={formikLogin.handleSubmit}>
                         <Form.Field>
                             <label>Email</label>
