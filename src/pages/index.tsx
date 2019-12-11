@@ -1,39 +1,41 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 import { firebaseAuth } from '../base/selectors';
-import ROUTES from "../routes";
+import ROUTES from '../routes';
+
 const Login = lazy(() => import('./Login'));
 const Boards = lazy(() => import('./Boards'));
 const BoardTasks = lazy(() => import('./BoardTasks'));
 
 
-type privateRoute = {
+type PrivateRouteProps = {
     component: any;
-    [x:string]: any;
-}
+    [x: string]: any;
+};
 
-const PrivateRoute = ({ component: Component, ...rest }: privateRoute) => {
-
+const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps) => {
     const { uid, isLoaded } = useSelector(firebaseAuth);
 
     if (!uid && isLoaded) {
-        return <Redirect {...rest} to={ROUTES.login} />
-    } else if (!isLoaded) {
-        return <span>Loading</span>
-    } else {
-        return (
-            <Route {...rest} render={(props) => (
+        return <Redirect {...rest} to={ROUTES.login} />;
+    }
+    if (!isLoaded) {
+        return <span>Loading</span>;
+    }
+    return (
+        <Route
+            {...rest}
+            render={(props) => (
                 <Component {...props} />
             )}
-            />
-        )
-    }
+        />
+    );
 };
 
 const Routes = () => (
-    <Suspense fallback={'loading'}>
+    <Suspense fallback="loading">
         <Switch>
             <Route
                 exact
