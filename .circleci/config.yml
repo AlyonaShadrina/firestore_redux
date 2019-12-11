@@ -7,8 +7,6 @@ jobs:
     docker:
       - image: circleci/node:10.16.0
     steps:
-      - react/install
-      - react/build
       - run:
           name: Deploy Master to Firebase
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
@@ -23,9 +21,20 @@ workflows:
       - react/build:
           requires:
             - react/install
+    filters:
+      branches:
+        ignore: master
+
+  deploy:
+    jobs:
+      - react/install
+      - react/build:
+          requires:
+            - react/install
       - deploy-job:
           requires:
             - react/build
           filters:
             branches:
               only: master
+
