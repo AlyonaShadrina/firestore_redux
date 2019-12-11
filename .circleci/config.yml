@@ -20,11 +20,11 @@ workflows:
       - react/build:
           requires:
             - react/install
-      - deploy:
-        jobs:
-          - deploy-job:
-              requires:
-                - react/build
-              filters:
-                branches:
-                  only: master
+  - deploy:
+    jobs:
+      - deploy-job:
+        requires:
+          - react/build
+        filters:
+          branches:
+            only: master
