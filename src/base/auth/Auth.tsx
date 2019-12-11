@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
-import { useFirebase } from 'react-redux-firebase'
-import { Button, Form, Grid, Segment, Header } from 'semantic-ui-react'
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { useFirebase } from 'react-redux-firebase';
+import {
+    Button, Form, Grid, Segment, Header,
+} from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
-import { firebaseAuth } from '../selectors'
-import ROUTES from "../../routes";
+import { firebaseAuth } from '../selectors';
+import ROUTES from '../../routes';
 
 
 type CreateUserCredentials = {
-    email: string
-    password: string
-    signIn?: boolean
-}
+    email: string;
+    password: string;
+    signIn?: boolean;
+};
 
 const LoginPage = () => {
     const firebase = useFirebase();
@@ -45,23 +47,25 @@ const LoginPage = () => {
             email: '',
             password: '',
         },
-        onSubmit: (values: CreateUserCredentials) => firebase.createUser(values).then(redirectToBoards),
+        onSubmit: (values: CreateUserCredentials) => (
+            firebase.createUser(values).then(redirectToBoards)
+        ),
     });
 
     if (!isLoaded) {
-        return <span>Loading...</span>
+        return <span>Loading...</span>;
     }
 
     return (
         <Segment placeholder style={{ minHeight: '100vh' }}>
             <Grid columns={2} stackable divided>
                 <Grid.Column>
-                    <Header as='h2' textAlign='center'>Login</Header>
+                    <Header as="h2" textAlign="center">Login</Header>
                     <Form onSubmit={formikLogin.handleSubmit}>
                         <Form.Field>
                             <label>Email</label>
                             <input
-                                placeholder='email'
+                                placeholder="email"
                                 name="email"
                                 type="email"
                                 onChange={formikLogin.handleChange}
@@ -78,17 +82,17 @@ const LoginPage = () => {
                                 value={formikLogin.values.password}
                             />
                         </Form.Field>
-                        <Button type='submit'>Login</Button>
+                        <Button type="submit">Login</Button>
                     </Form>
                 </Grid.Column>
 
-                <Grid.Column verticalAlign='middle'>
-                    <Header as='h2' textAlign='center'>Sign up</Header>
+                <Grid.Column verticalAlign="middle">
+                    <Header as="h2" textAlign="center">Sign up</Header>
                     <Form onSubmit={formikSignup.handleSubmit}>
                         <Form.Field>
                             <label>Email</label>
                             <input
-                                placeholder='email'
+                                placeholder="email"
                                 name="email"
                                 type="email"
                                 onChange={formikSignup.handleChange}
@@ -105,12 +109,12 @@ const LoginPage = () => {
                                 value={formikSignup.values.password}
                             />
                         </Form.Field>
-                        <Button type='submit'>Sign up</Button>
+                        <Button type="submit">Sign up</Button>
                     </Form>
                 </Grid.Column>
             </Grid>
         </Segment>
-    )
+    );
 };
 
 export default LoginPage;
