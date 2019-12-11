@@ -21,7 +21,7 @@ jobs:
 workflows:
   push:
     jobs:
-      - react/install
+      - react/install:
           filters:
             branches:
               ignore: master
