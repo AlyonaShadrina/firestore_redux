@@ -22,12 +22,21 @@ workflows:
   push:
     jobs:
       - react/install
+          filters:
+            branches:
+              ignore: master
       - react/test:
           requires:
             - react/install
+          filters:
+            branches:
+              ignore: master
       - react/build:
           requires:
             - react/install
+          filters:
+            branches:
+              ignore: master
       - deploy-job:
           filters:
             branches:
