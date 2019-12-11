@@ -1,7 +1,6 @@
-import { FirebaseReducer } from 'react-redux-firebase'
-import { firestoreReducer } from 'redux-firestore'
+import { FirebaseReducer, FirestoreReducer } from 'react-redux-firebase'
 
 export type stateType = {
     firebase: FirebaseReducer.Reducer,
-    firestore: any,
+    firestore: FirestoreReducer.Reducer,
 };
