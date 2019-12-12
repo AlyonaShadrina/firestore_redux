@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "eslint": " eslint --ext .jsx,.ts,.tsx ./"
+    "eslint": " eslint --ext .jsx,.ts,.tsx ./ --max-warnings=50"
   },
   "eslintConfig": {
     "extends": "react-app"
