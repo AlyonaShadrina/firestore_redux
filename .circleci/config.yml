@@ -45,6 +45,10 @@ workflows:
           requires:
             - react/install
           <<: *ignore_master
+      - react/eslint:
+          requires:
+            - react/install
+          <<: *ignore_master
 
   test_build_deploy:
     jobs:
