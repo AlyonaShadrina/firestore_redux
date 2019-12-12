@@ -74,8 +74,9 @@ const LoginPage = () => {
                             />
                         </Form.Field>
                         <Form.Field>
-                            <label>Password</label>
+                            <label htmlFor="loginPassword">Password</label>
                             <input
+                                id="loginPassword"
                                 placeholder="password"
                                 type="password"
                                 name="password"
@@ -91,8 +92,9 @@ const LoginPage = () => {
                     <Header as="h2" textAlign="center">Sign up</Header>
                     <Form onSubmit={formikSignup.handleSubmit}>
                         <Form.Field>
-                            <label>Email</label>
+                            <label htmlFor="signupEmail">Email</label>
                             <input
+                                id="signupEmail"
                                 placeholder="email"
                                 name="email"
                                 type="email"
@@ -101,8 +103,9 @@ const LoginPage = () => {
                             />
                         </Form.Field>
                         <Form.Field>
-                            <label>Password</label>
+                            <label htmlFor="signupPassword">Password</label>
                             <input
+                                id="signupPassword"
                                 placeholder="password"
                                 type="password"
                                 name="password"
