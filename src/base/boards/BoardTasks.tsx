@@ -9,7 +9,8 @@ import {
 import { firebaseAuth, firestoreData } from '../selectors';
 import ROUTES from '../../routes';
 import BoardEditForm from './BoardEditForm';
-import HeadingWithButtons from "../_common/HeadingWithButtons";
+import HeadingWithButtons from '../_common/HeadingWithButtons';
+import ButtonWithModalConfirm from '../_common/ButtonWithModalConfirm';
 
 
 const BoardTasks = () => {
@@ -67,7 +68,13 @@ const BoardTasks = () => {
                         text={name}
                         buttons={[
                             <Button onClick={toggleEditMode} circular icon="edit" />,
-                            <Button onClick={deleteBoard} circular icon="delete" />,
+                            <ButtonWithModalConfirm
+                                button={<Button circular icon="delete" />}
+                                content="This action is irrevisible"
+                                header="Are ypou sure?"
+                                icon="delete"
+                                action={deleteBoard}
+                            />,
                         ]}
                     />
                     {description}
