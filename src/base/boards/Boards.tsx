@@ -1,10 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, useFirestore } from 'react-redux-firebase';
-
 import { Link } from 'react-router-dom';
+import {
+    Segment, List, Header, Button, Grid,
+} from 'semantic-ui-react';
+
 import { firebaseAuth, firestoreData } from '../selectors';
 import ROUTES from '../../routes';
+import cropText from '../../utils/cropText';
 
 
 const Boards = () => {
@@ -30,22 +34,26 @@ const Boards = () => {
     return (
         <div>
             <div>
-                <h2>Boards</h2>
-                <button onClick={add} type="button">add</button>
-                <ul>
+                <Header as="h1">
+                    Boards
+                </Header>
+                <Button onClick={add} circular icon="add" primary />
+                <List as={Grid} columns={4} stackable>
                     {
                         boards && Object.keys(boards).map((boardId) => (
-                            <li key={boardId}>
-                                <div>
-                                    <Link to={ROUTES.dynamic.boardTasks(boardId)}>
-                                        {boards[boardId].name}
-                                    </Link>
-                                </div>
-                                <div>{boards[boardId].description}</div>
-                            </li>
+                            <List.Item key={boardId} as={Grid.Column}>
+                                <Segment>
+                                    <Header as="h2">
+                                        <Link to={ROUTES.dynamic.boardTasks(boardId)}>
+                                            {boards[boardId].name}
+                                        </Link>
+                                    </Header>
+                                    {cropText(boards[boardId].description)}
+                                </Segment>
+                            </List.Item>
                         ))
                     }
-                </ul>
+                </List>
             </div>
         </div>
     );

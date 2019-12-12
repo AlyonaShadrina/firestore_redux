@@ -4,3 +4,7 @@
 
 @primaryColor: #002f4e;
 @pageBackground: #eff0f1;
+
+@emSize: 16px;
+@fontSize: 16px;
+@lineHeight : 1.5;
