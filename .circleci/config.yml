@@ -8,9 +8,15 @@ jobs:
       - image: circleci/node:10.16.0
     steps:
       - checkout
+      - restore_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install
           command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run:
           name: build
           command: npm run build
@@ -18,27 +24,28 @@ jobs:
           name: Deploy Master to Firebase
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
+ignore_master: &ignore_master
+  filters:
+    branches:
+      ignore: master
+
 workflows:
-  push:
+  test_build:
     jobs:
       - react/install:
-          filters:
-            branches:
-              ignore: master
+          <<: *ignore_master
       - react/test:
           requires:
             - react/install
-          filters:
-            branches:
-              ignore: master
+          <<: *ignore_master
       - react/build:
           requires:
             - react/install
-          filters:
-            branches:
-              ignore: master
+          <<: *ignore_master
+
+  test_build_deploy:
+    jobs:
       - deploy-job:
           filters:
             branches:
               only: master
-
