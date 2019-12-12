@@ -9,6 +9,7 @@ import {
 import { firebaseAuth, firestoreData } from '../selectors';
 import ROUTES from '../../routes';
 import cropText from '../../utils/cropText';
+import HeadingWithButtons from '../_common/HeadingWithButtons';
 
 
 const Boards = () => {
@@ -34,10 +35,12 @@ const Boards = () => {
     return (
         <div>
             <div>
-                <Header as="h1">
-                    Boards
-                </Header>
-                <Button onClick={add} circular icon="add" primary />
+                <HeadingWithButtons
+                    text="Boards"
+                    buttons={[
+                        <Button onClick={add} circular icon="add" primary />,
+                    ]}
+                />
                 <List as={Grid} columns={4} stackable>
                     {
                         boards && Object.keys(boards).map((boardId) => (

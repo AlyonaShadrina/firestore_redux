@@ -1,6 +1,8 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { useFirebase } from 'react-redux-firebase';
+import { Link } from "react-router-dom";
+import ROUTES from "../../routes";
 
 const TopMenu = () => {
     const firebase = useFirebase();
@@ -12,7 +14,7 @@ const TopMenu = () => {
     return (
         <Menu>
             <Menu.Item>
-                Boards
+                <Link to={ROUTES.boards}>Boards</Link>
             </Menu.Item>
             <Menu.Menu position="right">
                 <Menu.Item onClick={logOut}>

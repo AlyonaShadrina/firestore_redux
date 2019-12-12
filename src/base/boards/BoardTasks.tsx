@@ -1,38 +1,97 @@
-import { useParams } from 'react-router';
-import { useFirestoreConnect } from 'react-redux-firebase';
+import { useHistory, useParams } from 'react-router';
+import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import React from 'react';
+import React, { useState } from 'react';
+import {
+    Button, Grid, Header, List, Segment,
+} from 'semantic-ui-react';
 
 import { firebaseAuth, firestoreData } from '../selectors';
+import ROUTES from '../../routes';
+import BoardEditForm from './BoardEditForm';
+import HeadingWithButtons from "../_common/HeadingWithButtons";
 
 
 const BoardTasks = () => {
     const { boardId } = useParams();
+    const history = useHistory();
 
     const { uid } = useSelector(firebaseAuth);
 
-    useFirestoreConnect([{
-        collection: `boards/${boardId}/tasks`,
-        where: ['uid', '==', (uid || '')],
-    }]);
+    useFirestoreConnect([
+        {
+            collection: `boards/${boardId}/tasks`,
+            where: ['uid', '==', (uid || '')],
+        },
+        {
+            collection: 'boards',
+            doc: boardId,
+        },
+    ]);
     const tasks = useSelector(firestoreData)[`boards/${boardId}/tasks`];
+    const { boards } = useSelector(firestoreData);
 
-    if (!tasks) {
+    const [editMode, setEditMode] = useState(false);
+
+    const firestore = useFirestore();
+
+    const deleteBoard = () => {
+        firestore.collection('boards').doc(boardId)
+            .delete()
+            .then(() => {
+                history.push(ROUTES.boards);
+            });
+    };
+
+    const toggleEditMode = () => {
+        setEditMode(!editMode);
+    };
+
+    if (!boards) {
         return null;
     }
 
+    const { name, description } = boards[boardId || ''];
+
     return (
-        <ul>
-            tasks
-            {
-                Object.keys(tasks).map((tasksId) => (
-                    <li key={tasksId}>
-                        <div>{tasks[tasksId].name}</div>
-                        <div>{tasks[tasksId].description}</div>
-                    </li>
-                ))
-            }
-        </ul>
+        <div>
+            {editMode ? (
+                <BoardEditForm
+                    initialValues={{ name, description }}
+                    submitCallback={toggleEditMode}
+                    cancelCallback={toggleEditMode}
+                />
+            ) : (
+                <>
+                    <HeadingWithButtons
+                        text={name}
+                        buttons={[
+                            <Button onClick={toggleEditMode} circular icon="edit" />,
+                            <Button onClick={deleteBoard} circular icon="delete" />,
+                        ]}
+                    />
+                    {description}
+                </>
+            )}
+            <Header as="h2">
+                Tasks
+            </Header>
+
+            <List as={Grid} columns={4} stackable>
+                {
+                    tasks && Object.keys(tasks).map((tasksId) => (
+                        <List.Item key={tasksId} as={Grid.Column}>
+                            <Segment>
+                                <Header as="h3">
+                                    {tasks[tasksId].name}
+                                </Header>
+                                <div>{tasks[tasksId].description}</div>
+                            </Segment>
+                        </List.Item>
+                    ))
+                }
+            </List>
+        </div>
     );
 };
 
