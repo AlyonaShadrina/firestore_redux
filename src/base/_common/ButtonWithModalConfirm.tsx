@@ -12,7 +12,9 @@ type OwnProps = {
     action: () => void;
 };
 
-const ButtonWithModalConfirm = ({ button, icon, header, content, action }: OwnProps) => (
+const ButtonWithModalConfirm = ({
+    button, icon, header, content, action,
+}: OwnProps) => (
     <Modal trigger={button} basic size="small">
         <Header icon={icon} content={header} />
         <Modal.Content>
@@ -21,11 +23,11 @@ const ButtonWithModalConfirm = ({ button, icon, header, content, action }: OwnPr
         <Modal.Actions>
             <Button basic color="red" inverted>
                 <Icon name="remove" />
-                {' '} No
+                No
             </Button>
             <Button color="green" inverted onClick={action}>
                 <Icon name="checkmark" />
-                {' '} Yes
+                Yes
             </Button>
         </Modal.Actions>
     </Modal>

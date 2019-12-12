@@ -1,8 +1,8 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { useFirebase } from 'react-redux-firebase';
-import { Link } from "react-router-dom";
-import ROUTES from "../../routes";
+import { Link } from 'react-router-dom';
+import ROUTES from '../../routes';
 
 const TopMenu = () => {
     const firebase = useFirebase();
