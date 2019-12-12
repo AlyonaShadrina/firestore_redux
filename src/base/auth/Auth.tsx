@@ -84,7 +84,7 @@ const LoginPage = () => {
                                 value={formikLogin.values.password}
                             />
                         </Form.Field>
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" primary>Login</Button>
                     </Form>
                 </Grid.Column>
 
