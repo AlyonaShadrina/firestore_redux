@@ -1,13 +1,12 @@
-import { useParams } from "react-router";
-import { useFirestoreConnect } from "react-redux-firebase";
-import { useSelector } from "react-redux";
-import React from "react";
+import { useParams } from 'react-router';
+import { useFirestoreConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
-import { firebaseAuth, firestoreData } from '../selectors'
+import { firebaseAuth, firestoreData } from '../selectors';
 
 
 const BoardTasks = () => {
-
     const { boardId } = useParams();
 
     const { uid } = useSelector(firebaseAuth);
@@ -19,7 +18,7 @@ const BoardTasks = () => {
     const tasks = useSelector(firestoreData)[`boards/${boardId}/tasks`];
 
     if (!tasks) {
-        return null
+        return null;
     }
 
     return (

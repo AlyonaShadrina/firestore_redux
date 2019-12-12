@@ -1,5 +1,5 @@
 import React from 'react';
-import Boards from "../base/boards/Boards";
+import Boards from '../base/boards/Boards';
 
 const BoardsPage = () => (
     <Boards />

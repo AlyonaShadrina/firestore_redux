@@ -11,14 +11,17 @@ jobs:
       - restore_cache:
             key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: install
+          name: Install pacakges
           command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
       - run:
-          name: build
+          name: Test
+          command: npm test
+      - run:
+          name: Build
           command: npm run build
       - run:
           name: Deploy Master to Firebase

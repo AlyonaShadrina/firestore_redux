@@ -1,5 +1,5 @@
 import React from 'react';
-import BoardTasks from "../base/boards/BoardTasks";
+import BoardTasks from '../base/boards/BoardTasks';
 
 const BoardTasksPage = () => (
     <BoardTasks />

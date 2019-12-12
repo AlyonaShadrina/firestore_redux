@@ -63,8 +63,9 @@ const LoginPage = () => {
                     <Header as="h2" textAlign="center">Login</Header>
                     <Form onSubmit={formikLogin.handleSubmit}>
                         <Form.Field>
-                            <label>Email</label>
+                            <label htmlFor="loginEmail">Email</label>
                             <input
+                                id="loginEmail"
                                 placeholder="email"
                                 name="email"
                                 type="email"
