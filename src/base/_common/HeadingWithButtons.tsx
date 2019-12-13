@@ -4,11 +4,12 @@ import React, { ReactNode } from 'react';
 type OwnProps = {
     text: string;
     buttons?: ReactNode[];
+    tag?: string;
 };
 
-const HeadingWithButtons = ({ text, buttons }: OwnProps) => (
+const HeadingWithButtons = ({ text, buttons, tag = 'h1' }: OwnProps) => (
     <Grid>
-        <Header as="h1">
+        <Header as={tag}>
             {text}
         </Header>
         <div>
