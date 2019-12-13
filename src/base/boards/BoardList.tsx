@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { Button, Grid, List } from 'semantic-ui-react';
 
-import { firebaseAuth, firestoreData } from '../selectors';
+import { firebaseAuth, firestoreOrdered } from '../selectors';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import BoardItem from './BoardItem';
 
@@ -11,7 +11,7 @@ import BoardItem from './BoardItem';
 const BoardList = () => {
     const { uid } = useSelector(firebaseAuth);
     const firestore = useFirestore();
-    const { boards } = useSelector(firestoreData);
+    const { boards } = useSelector(firestoreOrdered);
 
     useFirestoreConnect([{
         collection: 'boards',
@@ -35,8 +35,8 @@ const BoardList = () => {
                 ]}
             />
             <List as={Grid} columns={4} stackable>
-                {boards && Object.keys(boards).map((boardId) => (
-                    <BoardItem boardId={boardId} board={boards[boardId]} />
+                {boards && boards.map((board) => (
+                    <BoardItem boardId={board.id} board={board} />
                 ))}
             </List>
         </>

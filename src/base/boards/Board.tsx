@@ -19,10 +19,12 @@ const Board = () => {
     const firestore = useFirestore();
 
     useFirestoreConnect([
-        {
-            collection: `boards/${boardId}/tasks`,
-            where: ['uid', '==', (uid || '')],
-        },
+        // {
+        //     collection: `boards`,
+        //     where: ['uid', '==', (uid || '')],
+        //     doc: boardId,
+        //     subcollections: [{ collection: "tasks" }]
+        // },
         {
             collection: 'boards',
             doc: boardId,

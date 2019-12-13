@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
-import { useFirestore } from 'react-redux-firebase';
+import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { Button, Grid, List } from 'semantic-ui-react';
 import React from 'react';
 
-import { firebaseAuth, firestoreData } from '../selectors';
+import { firebaseAuth, firestoreOrdered } from '../selectors';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskItem from './TaskItem';
 
@@ -13,8 +13,14 @@ const TaskList = () => {
     const { boardId } = useParams();
     const firestore = useFirestore();
     const { uid } = useSelector(firebaseAuth);
+    const tasks = useSelector(firestoreOrdered)[`boards/${boardId}/tasks`];
 
-    const tasks = useSelector(firestoreData)[`boards/${boardId}/tasks`];
+    useFirestoreConnect([
+        {
+            collection: `boards/${boardId}/tasks`,
+            where: ['uid', '==', (uid || '')],
+        },
+    ]);
 
     const addTask = () => {
         firestore.collection(`boards/${boardId}/tasks`).add({
@@ -39,8 +45,8 @@ const TaskList = () => {
                 ]}
             />
             <List as={Grid} columns={4} stackable>
-                {tasks && Object.keys(tasks).map((tasksId) => (
-                    <TaskItem task={tasks[tasksId]} tasksId="tasksId" />
+                {tasks && tasks.map((task) => (
+                    <TaskItem task={task} tasksId="tasksId" />
                 ))}
             </List>
         </>
