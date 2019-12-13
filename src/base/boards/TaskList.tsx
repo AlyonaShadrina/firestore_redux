@@ -67,7 +67,7 @@ const TaskList = () => {
             />
             <List as={Grid} columns={4} stackable>
                 {tasks && tasks.map((task) => (
-                    <TaskItem task={task} tasksId="tasksId" />
+                    <TaskItem task={task} key={task.id} tasksId="tasksId" />
                 ))}
             </List>
         </>

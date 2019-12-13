@@ -85,7 +85,7 @@ const Board = () => {
                         submitButtonText="Save"
                         fields={fields}
                         heading="Edit board"
-                        key="Save"
+                        key="edit"
                     />,
                     <Modal
                         basic
@@ -108,6 +108,7 @@ const Board = () => {
                             },
                         ]}
                         icon="delete"
+                        key="delete"
                     />,
                 ]}
             />
