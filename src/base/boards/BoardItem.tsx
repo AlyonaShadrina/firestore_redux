@@ -10,18 +10,14 @@ import { BoardType } from '../../types';
 
 
 type OwnProps = {
-    boardId: string;
     board: BoardType;
 };
 
-const BoardItem = ({ boardId, board: { name, description } }: OwnProps) => (
-    <List.Item
-        key={boardId}
-        as={Grid.Column}
-    >
+const BoardItem = ({ board: { name, description, id } }: OwnProps) => (
+    <List.Item as={Grid.Column}>
         <Segment>
             <Header as="h2">
-                <Link to={ROUTES.dynamic.boardTasks(boardId)}>
+                <Link to={ROUTES.dynamic.boardTasks(id)}>
                     {name}
                 </Link>
             </Header>

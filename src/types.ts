@@ -5,10 +5,14 @@ export type StateType = {
     firestore: FirestoreReducer.Reducer;
 };
 
-export type BoardType = {
+export type EditBoardType = {
     name: string;
     description: string;
+};
+
+export type BoardType = EditBoardType & {
     uid: string;
+    id?: string;
 };
 
 export type TaskType = {

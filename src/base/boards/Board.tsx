@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 
-import { firebaseAuth, firestoreData } from '../selectors';
+import { firestoreData } from '../selectors';
 import ROUTES from '../../routes';
 import BoardEditForm from './BoardEditForm';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
@@ -14,7 +14,7 @@ import TaskList from './TaskList';
 const Board = () => {
     const { boardId } = useParams();
     const history = useHistory();
-    const { uid } = useSelector(firebaseAuth);
+    // const { uid } = useSelector(firebaseAuth);
     const { boards } = useSelector(firestoreData);
     const firestore = useFirestore();
 
@@ -40,7 +40,6 @@ const Board = () => {
                 history.push(ROUTES.boards);
             });
     };
-
 
     const toggleEditMode = () => {
         setEditMode(!editMode);

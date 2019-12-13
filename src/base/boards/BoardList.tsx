@@ -6,6 +6,8 @@ import { Button, Grid, List } from 'semantic-ui-react';
 import { firebaseAuth, firestoreOrdered } from '../selectors';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import BoardItem from './BoardItem';
+import ModalForm from '../_common/ModalForm';
+import { EditBoardType } from '../../types';
 
 
 const BoardList = () => {
@@ -18,25 +20,47 @@ const BoardList = () => {
         where: ['uid', '==', (uid || '')],
     }]);
 
-    const add = () => {
+    const add = (values: EditBoardType) => {
         firestore.collection('boards').add({
-            name: 'name',
-            description: 'description',
+            ...values,
             uid,
         });
     };
+
+    const fields = [
+        {
+            id: 'boardName',
+            placeholder: 'name',
+            name: 'name',
+            type: 'text',
+            label: 'Name',
+        },
+        {
+            id: 'boardDescription',
+            placeholder: 'description',
+            name: 'description',
+            type: 'text',
+            label: 'Description',
+        },
+    ];
 
     return (
         <>
             <HeadingWithButtons
                 text="Boards"
                 buttons={[
-                    <Button onClick={add} circular icon="add" primary />,
+                    <ModalForm
+                        handleSubmit={add}
+                        button={<Button circular icon="add" primary />}
+                        submitButtonText="Add"
+                        fields={fields}
+                        heading="Add new board"
+                    />,
                 ]}
             />
             <List as={Grid} columns={4} stackable>
                 {boards && boards.map((board) => (
-                    <BoardItem boardId={board.id} board={board} />
+                    <BoardItem key={board.id} board={board} />
                 ))}
             </List>
         </>
