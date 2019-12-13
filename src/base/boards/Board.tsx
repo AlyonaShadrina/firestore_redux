@@ -1,20 +1,21 @@
 import { useHistory, useParams } from 'react-router';
 import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 
-import { firestoreData } from '../selectors';
+import { firebaseAuth, firestoreData } from '../selectors';
 import ROUTES from '../../routes';
-import BoardEditForm from './BoardEditForm';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskList from './TaskList';
+import ModalForm from '../_common/ModalForm';
+import { EditBoardType } from '../../types';
 
 
 const Board = () => {
     const { boardId } = useParams();
     const history = useHistory();
-    // const { uid } = useSelector(firebaseAuth);
+    const { uid } = useSelector(firebaseAuth);
     const { boards } = useSelector(firestoreData);
     const firestore = useFirestore();
 
@@ -26,12 +27,18 @@ const Board = () => {
         //     subcollections: [{ collection: "tasks" }]
         // },
         {
+            collection: `boards/${boardId}/tasks`,
+            where: ['uid', '==', (uid || '')],
+        },
+        {
             collection: 'boards',
             doc: boardId,
         },
     ]);
 
-    const [editMode, setEditMode] = useState(false);
+    const editBoard = (values: EditBoardType) => {
+        firestore.collection('boards').doc(boardId).update(values);
+    };
 
     const deleteBoard = () => {
         firestore.collection('boards').doc(boardId)
@@ -41,22 +48,45 @@ const Board = () => {
             });
     };
 
-    const toggleEditMode = () => {
-        setEditMode(!editMode);
-    };
-
     if (!boards) {
         return null;
     }
 
     const { name, description } = boards[boardId || ''];
 
-    const NameDescription = (
-        <>
+    const fields = [
+        {
+            id: 'boardName',
+            placeholder: 'name',
+            name: 'name',
+            type: 'text',
+            label: 'Name',
+            required: true,
+            initialValue: name,
+        },
+        {
+            id: 'boardDescription',
+            placeholder: 'description',
+            name: 'description',
+            type: 'text',
+            label: 'Description',
+            initialValue: description,
+        },
+    ];
+
+    return (
+        <div>
             <HeadingWithButtons
                 text={name}
                 buttons={[
-                    <Button onClick={toggleEditMode} circular icon="edit" />,
+                    <ModalForm
+                        onSubmit={editBoard}
+                        button={<Button circular icon="edit" />}
+                        submitButtonText="Save"
+                        fields={fields}
+                        heading="Edit board"
+                        key="Save"
+                    />,
                     <Modal
                         basic
                         size="small"
@@ -82,18 +112,6 @@ const Board = () => {
                 ]}
             />
             {description}
-        </>
-    );
-
-    return (
-        <div>
-            {editMode ? (
-                <BoardEditForm
-                    initialValues={{ name, description }}
-                    submitCallback={toggleEditMode}
-                    cancelCallback={toggleEditMode}
-                />
-            ) : NameDescription}
             <TaskList />
         </div>
     );

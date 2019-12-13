@@ -7,6 +7,8 @@ import React from 'react';
 import { firebaseAuth, firestoreOrdered } from '../selectors';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskItem from './TaskItem';
+import ModalForm from '../_common/ModalForm';
+import { EditTaskType } from '../../types';
 
 
 const TaskList = () => {
@@ -22,13 +24,30 @@ const TaskList = () => {
         },
     ]);
 
-    const addTask = () => {
+    const add = (values: EditTaskType) => {
         firestore.collection(`boards/${boardId}/tasks`).add({
-            name: 'task name',
-            description: 'task description',
+            ...values,
             uid,
         });
     };
+
+    const fields = [
+        {
+            id: 'taskName',
+            placeholder: 'name',
+            name: 'name',
+            type: 'text',
+            label: 'Name',
+            required: true,
+        },
+        {
+            id: 'taskDescription',
+            placeholder: 'description',
+            name: 'description',
+            type: 'text',
+            label: 'Description',
+        },
+    ];
 
     return (
         <>
@@ -36,11 +55,13 @@ const TaskList = () => {
                 text="Tasks"
                 tag="h2"
                 buttons={[
-                    <Button
-                        onClick={addTask}
-                        circular
-                        icon="add"
-                        primary
+                    <ModalForm
+                        onSubmit={add}
+                        button={<Button circular icon="add" primary />}
+                        submitButtonText="Add"
+                        fields={fields}
+                        heading="Add new task"
+                        key="Add"
                     />,
                 ]}
             />

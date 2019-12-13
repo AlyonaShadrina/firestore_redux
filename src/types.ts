@@ -10,13 +10,17 @@ export type EditBoardType = {
     description: string;
 };
 
+export type EditTaskType = {
+    name: string;
+    description: string;
+};
+
 export type BoardType = EditBoardType & {
     uid: string;
     id?: string;
 };
 
-export type TaskType = {
-    name: string;
-    description: string;
+export type TaskType = EditTaskType & {
     uid: string;
+    id?: string;
 };

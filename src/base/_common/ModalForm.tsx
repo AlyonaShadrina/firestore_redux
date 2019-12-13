@@ -53,7 +53,9 @@ const ModalForm = ({
     } = useFormik({
         initialValues,
         onSubmit: (val: any) => {
+            // Not working on Enter
             onSubmit(val);
+            onClose();
         },
         validate: (val: any) => {
             const validateErrors: any = {};
