@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
     Button, Form, Modal,
 } from 'semantic-ui-react';
@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 
 
 type OwnProps = {
-    handleSubmit: (arg0: any) => void;
+    onSubmit: (arg0: any) => void;
     button: ReactNode;
     submitButtonText: string;
     fields: FieldProps[];
@@ -14,37 +14,60 @@ type OwnProps = {
 };
 
 type FieldProps = {
-    id: string;
-    placeholder: string;
     name: string;
     type: string;
-    label: string;
+    id?: string;
+    placeholder?: string;
+    label?: string;
     initialValue?: string;
+    required?: boolean;
 };
 
 const ModalForm = ({
-    handleSubmit, button, submitButtonText, fields, heading = '',
+    onSubmit, button, submitButtonText, fields, heading = '',
 }: OwnProps) => {
+    const [open, setOpen] = useState(false);
 
-    const formInitialValues = (fields: FieldProps[]) => {
-        const initialValues = {};
-        fields.map((field: FieldProps) => {
-            // @ts-ignore
+    const onOpen = () => {
+        setOpen(true);
+    };
+
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    const formInitialValues = (fieldsArray: FieldProps[]): {[key: string]: string} => {
+        const initialValues: any = {};
+
+        fieldsArray.map((field: FieldProps) => {
             initialValues[field.name] = field.initialValue || '';
+            return null;
         });
-        return initialValues
+
+        return initialValues;
     };
     const initialValues = formInitialValues(fields);
 
-    console.log('initialValues', initialValues);
-    const formik = useFormik({
-        initialValues: {
-            [fields[0].name]: '',
+    const {
+        handleSubmit, handleChange, values, isValid,
+    } = useFormik({
+        initialValues,
+        onSubmit: (val: any) => {
+            onSubmit(val);
         },
-        // initialValues: initialValues,
-        onSubmit: (values: any) => {
-            handleSubmit(values);
+        validate: (val: any) => {
+            const validateErrors: any = {};
+
+            fields.map((field) => {
+                if (field.required && !val[field.name]) {
+                    validateErrors[field.name] = 'required';
+                }
+                return null;
+            });
+
+            return validateErrors;
         },
+        isInitialValid: false,
     });
 
     return (
@@ -53,22 +76,27 @@ const ModalForm = ({
             basic
             size="tiny"
             as={Form}
-            onSubmit={formik.handleSubmit}
+            onSubmit={handleSubmit}
             inverted
+            open={open}
+            onOpen={onOpen}
+            onClose={onClose}
         >
             <Modal.Header>{heading}</Modal.Header>
             <Modal.Content scrolling>
                 {
                     fields.map((field: FieldProps) => (
                         <Form.Field key={field.id}>
-                            <label htmlFor={field.id}>{field.label}</label>
+                            <label htmlFor={field.id}>
+                                {`${field.label} ${field.required ? '*' : ''}`}
+                            </label>
                             <input
                                 id={field.id}
                                 placeholder={field.placeholder}
                                 name={field.name}
                                 type={field.type}
-                                onChange={formik.handleChange}
-                                value={formik.values[field.name]}
+                                onChange={handleChange}
+                                value={values[field.name]}
                             />
                         </Form.Field>
                     ))
@@ -76,9 +104,17 @@ const ModalForm = ({
             </Modal.Content>
             <Modal.Actions>
                 <Button
+                    basic
+                    inverted
+                    onClick={onClose}
+                >
+                    Cancel
+                </Button>
+                <Button
                     color="green"
                     basic
                     type="submit"
+                    disabled={!isValid}
                 >
                     {submitButtonText}
                 </Button>

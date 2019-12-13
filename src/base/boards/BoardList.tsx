@@ -34,6 +34,7 @@ const BoardList = () => {
             name: 'name',
             type: 'text',
             label: 'Name',
+            required: true,
         },
         {
             id: 'boardDescription',
@@ -50,11 +51,12 @@ const BoardList = () => {
                 text="Boards"
                 buttons={[
                     <ModalForm
-                        handleSubmit={add}
+                        onSubmit={add}
                         button={<Button circular icon="add" primary />}
                         submitButtonText="Add"
                         fields={fields}
                         heading="Add new board"
+                        key="Add"
                     />,
                 ]}
             />
