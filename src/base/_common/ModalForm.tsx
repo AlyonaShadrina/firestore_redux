@@ -79,7 +79,6 @@ const ModalForm = ({
             size="tiny"
             as={Form}
             onSubmit={handleSubmit}
-            inverted
             open={open}
             onOpen={onOpen}
             onClose={onClose}

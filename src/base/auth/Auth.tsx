@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useFirebase } from 'react-redux-firebase';
 import {
-    Button, Form, Grid, Segment, Header,
+    Button, Form, Grid, Segment, Header, Dimmer, Loader,
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
@@ -53,7 +53,7 @@ const LoginPage = () => {
     });
 
     if (!isLoaded) {
-        return <span>Loading...</span>;
+        return <Dimmer active><Loader /></Dimmer>;
     }
 
     return (
@@ -113,7 +113,7 @@ const LoginPage = () => {
                                 value={formikSignup.values.password}
                             />
                         </Form.Field>
-                        <Button type="submit">Sign up</Button>
+                        <Button type="submit" primary>Sign up</Button>
                     </Form>
                 </Grid.Column>
             </Grid>

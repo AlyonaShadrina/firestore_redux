@@ -1,3 +1,11 @@
 /*******************************
          Site Overrides
 *******************************/
+
+@background: #1d1e22;
+
+.ui.segment, .ui.segment.placeholder {
+    background: @background;
+    box-shadow: 0 4px 30px rgba(0,0,0,.5);
+    word-break: break-word;
+}

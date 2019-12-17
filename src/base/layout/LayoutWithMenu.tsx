@@ -5,7 +5,9 @@ import TopMenu from './TopMenu';
 const LayoutWithMenu = ({ children }: PropsWithChildren<{}>) => (
     <>
         <TopMenu />
-        {children}
+        <div style={{ paddingLeft: '1.125em', paddingRight: '1.125em', }}>
+            {children}
+        </div>
     </>
 );
 
