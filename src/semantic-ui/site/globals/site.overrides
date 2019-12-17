@@ -1,0 +1,10 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+a {
+    color: @primaryColor;
+    &:hover {
+        color: @primaryColor;
+    }
+}

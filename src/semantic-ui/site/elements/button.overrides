@@ -1,0 +1,11 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.ui.button:not(.primary), .ui.basic.button {
+    color: rgba(255, 255, 255, 0.6) !important;
+    &:hover, &:focus {
+        background: @background !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+}

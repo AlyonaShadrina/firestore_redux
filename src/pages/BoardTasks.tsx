@@ -1,8 +1,11 @@
 import React from 'react';
-import BoardTasks from '../base/boards/BoardTasks';
+import Board from '../base/boards/Board';
+import LayoutWithMenu from '../base/layout/LayoutWithMenu';
 
 const BoardTasksPage = () => (
-    <BoardTasks />
+    <LayoutWithMenu>
+        <Board />
+    </LayoutWithMenu>
 );
 
 export default BoardTasksPage;

@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useFirebase } from 'react-redux-firebase';
 import {
-    Button, Form, Grid, Segment, Header,
+    Button, Form, Grid, Segment, Header, Dimmer, Loader, Container,
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
+import { showErrorToast } from '../layout/showToast';
 import { firebaseAuth } from '../selectors';
 import ROUTES from '../../routes';
 
@@ -39,7 +40,12 @@ const LoginPage = () => {
             email: '',
             password: '',
         },
-        onSubmit: (values: CreateUserCredentials) => firebase.login(values).then(redirectToBoards),
+        onSubmit: (values: CreateUserCredentials) => (
+            firebase
+                .login(values)
+                .then(redirectToBoards)
+                .catch((error) => showErrorToast(error.message))
+        ),
     });
 
     const formikSignup = useFormik({
@@ -48,16 +54,19 @@ const LoginPage = () => {
             password: '',
         },
         onSubmit: (values: CreateUserCredentials) => (
-            firebase.createUser(values).then(redirectToBoards)
+            firebase
+                .createUser(values)
+                .then(redirectToBoards)
+                .catch((error) => showErrorToast(error.message))
         ),
     });
 
     if (!isLoaded) {
-        return <span>Loading...</span>;
+        return <Dimmer active><Loader /></Dimmer>;
     }
 
     return (
-        <Segment placeholder style={{ minHeight: '100vh' }}>
+        <Segment placeholder style={{ minHeight: '100vh' }} as={Container} fluid>
             <Grid columns={2} stackable divided>
                 <Grid.Column>
                     <Header as="h2" textAlign="center">Login</Header>
@@ -84,7 +93,7 @@ const LoginPage = () => {
                                 value={formikLogin.values.password}
                             />
                         </Form.Field>
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" primary>Login</Button>
                     </Form>
                 </Grid.Column>
 
@@ -113,7 +122,7 @@ const LoginPage = () => {
                                 value={formikSignup.values.password}
                             />
                         </Form.Field>
-                        <Button type="submit">Sign up</Button>
+                        <Button type="submit" primary>Sign up</Button>
                     </Form>
                 </Grid.Column>
             </Grid>

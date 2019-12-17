@@ -1,8 +1,12 @@
 import React from 'react';
-import Boards from '../base/boards/Boards';
+import BoardList from '../base/boards/BoardList';
+import LayoutWithMenu from '../base/layout/LayoutWithMenu';
+
 
 const BoardsPage = () => (
-    <Boards />
+    <LayoutWithMenu>
+        <BoardList />
+    </LayoutWithMenu>
 );
 
 export default BoardsPage;

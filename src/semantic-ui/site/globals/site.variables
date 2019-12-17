@@ -1,0 +1,13 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@primaryColor: #69f0ae;
+@pageBackground: rgb(22, 22, 22);
+@background: #000a12;
+
+@textColor: rgb(220, 220, 220);
+
+@emSize: 16px;
+@fontSize: 16px;
+@lineHeight : 1.5;
