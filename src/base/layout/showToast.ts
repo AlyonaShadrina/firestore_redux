@@ -26,7 +26,7 @@ export const showSuccessToast = (title: string) => {
     showToast({
         title,
         type: 'success',
-        time: 13000,
+        time: 3000,
     });
 };
 
