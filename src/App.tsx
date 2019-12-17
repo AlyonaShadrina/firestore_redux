@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore'; // <- needed if using firestore
 import { createStore, combineReducers, compose } from 'redux';
@@ -10,17 +9,14 @@ import { BrowserRouter } from 'react-router-dom';
 // import 'semantic-ui-css/semantic.min.css';
 import 'semantic-ui-less/semantic.less';
 
-import { firebaseConfig } from './config';
 import Routes from './pages';
+import firebase from './firebase';
+
 
 const rrfConfig = {
     // userProfile: 'users',
     // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 };
-
-firebase.initializeApp(firebaseConfig);
-
-firebase.firestore(); // <- needed if using firestore
 
 const rootReducer = combineReducers({
     firebase: firebaseReducer,
