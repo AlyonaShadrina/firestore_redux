@@ -8,6 +8,7 @@ import HeadingWithButtons from '../_common/HeadingWithButtons';
 import BoardItem from './BoardItem';
 import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
+import { showErrorToast, showSuccessToast } from '../layout/showToast';
 
 
 const BoardList = () => {
@@ -21,10 +22,10 @@ const BoardList = () => {
     }]);
 
     const add = (values: EditBoardType) => {
-        firestore.collection('boards').add({
-            ...values,
-            uid,
-        });
+        firestore.collection('boards')
+            .add({ ...values, uid })
+            .then(() => showSuccessToast(`${values.name} added.`))
+            .catch((error) => showErrorToast(error.message));
     };
 
     const fields = [

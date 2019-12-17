@@ -9,6 +9,7 @@ import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskItem from './TaskItem';
 import ModalForm from '../_common/ModalForm';
 import { EditTaskType } from '../../types';
+import { showSuccessToast, showErrorToast } from '../layout/showToast';
 
 
 const TaskList = () => {
@@ -25,10 +26,10 @@ const TaskList = () => {
     ]);
 
     const add = (values: EditTaskType) => {
-        firestore.collection(`boards/${boardId}/tasks`).add({
-            ...values,
-            uid,
-        });
+        firestore.collection(`boards/${boardId}/tasks`)
+            .add({ ...values, uid })
+            .then(() => showSuccessToast(`${values.name} added.`))
+            .catch((error) => showErrorToast(error.message));
     };
 
     const fields = [

@@ -2,11 +2,12 @@
         Site Overrides
 *******************************/
 
+@primaryColor: #69f0ae;
 @pageBackground: rgb(22, 22, 22);
 @background: #161616;
 
 .ui.message {
-    padding-right: 2em;
+    padding-right: 3em;
 
     & .header:not(.ui) {
         font-size: 1rem;
@@ -16,10 +17,17 @@
         font-size: 2rem;
     }
 
-    &.error {
+    &.error, &.success {
         background: @background;
         border: none;
         box-shadow: 0 4px 30px rgba(0,0,0,.5);
+    }
+
+    &.success {
+        color: @primaryColor;
+        & .header {
+            color: @primaryColor;
+        }
     }
 }
 

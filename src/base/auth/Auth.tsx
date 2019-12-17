@@ -7,7 +7,7 @@ import {
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
-import showToast from '../layout/showToast';
+import { showErrorToast } from '../layout/showToast';
 import { firebaseAuth } from '../selectors';
 import ROUTES from '../../routes';
 
@@ -44,7 +44,7 @@ const LoginPage = () => {
             firebase
                 .login(values)
                 .then(redirectToBoards)
-                .catch((error) => showToast({ type: 'error', title: error.message }))
+                .catch((error) => showErrorToast(error.message))
         ),
     });
 
@@ -54,7 +54,10 @@ const LoginPage = () => {
             password: '',
         },
         onSubmit: (values: CreateUserCredentials) => (
-            firebase.createUser(values).then(redirectToBoards)
+            firebase
+                .createUser(values)
+                .then(redirectToBoards)
+                .catch((error) => showErrorToast(error.message))
         ),
     });
 

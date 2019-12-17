@@ -48,7 +48,7 @@ const Board = () => {
             });
     };
 
-    if (!boards) {
+    if (!boards || !boards[boardId || '']) {
         return null;
     }
 
