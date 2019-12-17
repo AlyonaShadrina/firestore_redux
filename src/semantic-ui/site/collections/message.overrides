@@ -1,3 +1,25 @@
 /*******************************
         Site Overrides
 *******************************/
+
+@pageBackground: rgb(22, 22, 22);
+@background: #161616;
+
+.ui.message {
+    padding-right: 2em;
+
+    & .header:not(.ui) {
+        font-size: 1rem;
+    }
+
+    &.icon > .icon:not(.close) {
+        font-size: 2rem;
+    }
+
+    &.error {
+        background: @background;
+        border: none;
+        box-shadow: 0 4px 30px rgba(0,0,0,.5);
+    }
+}
+

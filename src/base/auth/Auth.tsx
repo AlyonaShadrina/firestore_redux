@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useFirebase } from 'react-redux-firebase';
 import {
-    Button, Form, Grid, Segment, Header, Dimmer, Loader,
+    Button, Form, Grid, Segment, Header, Dimmer, Loader, Container,
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
+import showToast from '../layout/showToast';
 import { firebaseAuth } from '../selectors';
 import ROUTES from '../../routes';
 
@@ -39,7 +40,12 @@ const LoginPage = () => {
             email: '',
             password: '',
         },
-        onSubmit: (values: CreateUserCredentials) => firebase.login(values).then(redirectToBoards),
+        onSubmit: (values: CreateUserCredentials) => (
+            firebase
+                .login(values)
+                .then(redirectToBoards)
+                .catch((error) => showToast({ type: 'error', title: error.message }))
+        ),
     });
 
     const formikSignup = useFormik({
@@ -57,7 +63,7 @@ const LoginPage = () => {
     }
 
     return (
-        <Segment placeholder style={{ minHeight: '100vh' }}>
+        <Segment placeholder style={{ minHeight: '100vh' }} as={Container} fluid>
             <Grid columns={2} stackable divided>
                 <Grid.Column>
                     <Header as="h2" textAlign="center">Login</Header>

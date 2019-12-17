@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { firebaseAuth } from '../base/selectors';
 import ROUTES from '../routes';
+import { Dimmer, Loader } from "semantic-ui-react";
 
 const Login = lazy(() => import('./Login'));
 const Boards = lazy(() => import('./Boards'));
@@ -22,7 +23,7 @@ const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps) => {
         return <Redirect {...rest} to={ROUTES.login} />;
     }
     if (!isLoaded) {
-        return <span>Loading</span>;
+        return <Dimmer active><Loader /></Dimmer>;
     }
     return (
         <Route
@@ -35,7 +36,7 @@ const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps) => {
 };
 
 const Routes = () => (
-    <Suspense fallback="loading">
+    <Suspense fallback={<Dimmer active><Loader /></Dimmer>}>
         <Switch>
             <Route
                 exact

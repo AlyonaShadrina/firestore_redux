@@ -1,13 +1,19 @@
 import React, { PropsWithChildren } from 'react';
+import { SemanticToastContainer } from 'react-semantic-toasts';
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
+
+import { Container } from 'semantic-ui-react';
+
 import TopMenu from './TopMenu';
 
 
 const LayoutWithMenu = ({ children }: PropsWithChildren<{}>) => (
     <>
         <TopMenu />
-        <div style={{ paddingLeft: '1.125em', paddingRight: '1.125em', }}>
+        <SemanticToastContainer />
+        <Container fluid>
             {children}
-        </div>
+        </Container>
     </>
 );
 

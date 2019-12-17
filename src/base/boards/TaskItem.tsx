@@ -1,15 +1,13 @@
 import {
-    Button,
-    Grid, Header, List, Modal, Segment,
+    Button, Grid, List, Modal, Segment,
 } from 'semantic-ui-react';
 import React from 'react';
+import { useFirestore } from 'react-redux-firebase';
+import { useParams } from 'react-router';
 
-import { EditBoardType, EditTaskType, TaskType } from '../../types';
-import ModalForm from "../_common/ModalForm";
-import HeadingWithButtons from "../_common/HeadingWithButtons";
-import ROUTES from "../../routes";
-import { useFirestore } from "react-redux-firebase";
-import { useParams } from "react-router";
+import { EditTaskType, TaskType } from '../../types';
+import ModalForm from '../_common/ModalForm';
+import HeadingWithButtons from '../_common/HeadingWithButtons';
 
 
 type OwnProps = {
@@ -95,7 +93,7 @@ const TaskItem = ({ tasksId, task: { name, description, id } }: OwnProps) => {
                 </Segment>
             </List.Item>
         )
-    )
+    );
 };
 
 export default TaskItem;
