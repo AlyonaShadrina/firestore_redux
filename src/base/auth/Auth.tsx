@@ -102,13 +102,13 @@ const LoginPage = () => {
                         <Button type="submit" primary>Login</Button>
                     </Form>
                 </Grid.Column>
-                <Grid.Column>
+                <Grid.Column verticalAlign="middle">
                     <Button onClick={loginWithGoogle}>
                         <Icon name="google" />
                         Login with Google
                     </Button>
                 </Grid.Column>
-                <Grid.Column verticalAlign="middle">
+                <Grid.Column>
                     <Header as="h2" textAlign="center">Sign up</Header>
                     <Form onSubmit={formikSignup.handleSubmit}>
                         <Form.Field>
