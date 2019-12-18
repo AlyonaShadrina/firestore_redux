@@ -4,6 +4,7 @@ import { firebaseConfig } from './config';
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.firestore(); // <- needed if using firestore
+// enablePersistence for offline pwa
+firebase.firestore().enablePersistence();
 
 export default firebase;
