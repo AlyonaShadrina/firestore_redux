@@ -11,6 +11,7 @@ import TaskList from './TaskList';
 import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
 import { showErrorToast, showSuccessToast } from '../../utils/showToast';
+import HeadTag from '../_common/HeadTag';
 
 
 const Board = () => {
@@ -82,6 +83,7 @@ const Board = () => {
 
     return (
         <div>
+            <HeadTag title={name} />
             <HeadingWithButtons
                 text={name}
                 buttons={[

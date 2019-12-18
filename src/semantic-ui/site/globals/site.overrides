@@ -8,3 +8,7 @@ a {
         color: @primaryColor;
     }
 }
+
+.todo.board-item {
+    min-height: 110px;
+}
