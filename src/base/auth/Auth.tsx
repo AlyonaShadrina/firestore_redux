@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useFirebase } from 'react-redux-firebase';
 import {
-    Button, Form, Grid, Segment, Header, Dimmer, Loader, Container,
+    Button, Form, Grid, Segment, Header, Dimmer, Loader, Container, Icon,
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
@@ -61,13 +61,19 @@ const LoginPage = () => {
         ),
     });
 
+    const loginWithGoogle = () => (
+        firebase
+            .login({ provider: 'google', type: 'popup' })
+            .catch((error) => showErrorToast(error.message))
+    );
+
     if (!isLoaded) {
         return <Dimmer active><Loader /></Dimmer>;
     }
 
     return (
         <Segment placeholder style={{ minHeight: '100vh' }} as={Container} fluid>
-            <Grid columns={2} stackable divided>
+            <Grid columns={3} stackable divided>
                 <Grid.Column>
                     <Header as="h2" textAlign="center">Login</Header>
                     <Form onSubmit={formikLogin.handleSubmit}>
@@ -96,7 +102,12 @@ const LoginPage = () => {
                         <Button type="submit" primary>Login</Button>
                     </Form>
                 </Grid.Column>
-
+                <Grid.Column>
+                    <Button onClick={loginWithGoogle}>
+                        <Icon name="google" />
+                        Login with Google
+                    </Button>
+                </Grid.Column>
                 <Grid.Column verticalAlign="middle">
                     <Header as="h2" textAlign="center">Sign up</Header>
                     <Form onSubmit={formikSignup.handleSubmit}>
