@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 import { EditTaskType, TaskType } from '../../types';
 import ModalForm from '../_common/ModalForm';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
-import { showErrorToast, showSuccessToast } from '../layout/showToast';
+import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 
 
 type OwnProps = {

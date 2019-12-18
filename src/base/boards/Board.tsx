@@ -10,7 +10,7 @@ import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskList from './TaskList';
 import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
-import { showErrorToast, showSuccessToast } from '../layout/showToast';
+import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 
 
 const Board = () => {

@@ -7,7 +7,7 @@ import {
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 
-import { showErrorToast } from '../layout/showToast';
+import { showErrorToast } from '../../utils/showToast';
 import { firebaseAuth } from '../selectors';
 import ROUTES from '../../routes';
 
