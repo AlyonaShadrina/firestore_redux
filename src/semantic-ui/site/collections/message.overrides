@@ -6,15 +6,27 @@
 @pageBackground: rgb(22, 22, 22);
 @background: #161616;
 
+.ui-alerts.top-right {
+    @media (max-width: 600px) {
+        top: 10px !important;
+        right: 10px !important;
+    }
+}
+
 .ui.message {
     padding-right: 3em;
-
+    @media (max-width: 600px) {
+        padding: 1rem 2rem 1rem 1rem;
+    }
     & .header:not(.ui) {
         font-size: 1rem;
     }
 
     &.icon > .icon:not(.close) {
         font-size: 2rem;
+        @media (max-width: 600px) {
+            font-size: 1rem;
+        }
     }
 
     &.error, &.success {

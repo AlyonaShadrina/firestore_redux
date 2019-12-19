@@ -8,7 +8,7 @@ import HeadingWithButtons from '../_common/HeadingWithButtons';
 import BoardItem from './BoardItem';
 import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
-import { showErrorToast, showSuccessToast } from '../layout/showToast';
+import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 
 
 const BoardList = () => {

@@ -9,7 +9,7 @@ import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskItem from './TaskItem';
 import ModalForm from '../_common/ModalForm';
 import { EditTaskType } from '../../types';
-import { showSuccessToast, showErrorToast } from '../layout/showToast';
+import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 
 
 const TaskList = () => {

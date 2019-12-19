@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import { EditTaskType, TaskType } from '../../types';
 import ModalForm from '../_common/ModalForm';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
+import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 
 
 type OwnProps = {
@@ -20,11 +21,17 @@ const TaskItem = ({ tasksId, task: { name, description, id } }: OwnProps) => {
     const firestore = useFirestore();
 
     const editTask = (values: EditTaskType) => {
-        firestore.collection(`boards/${boardId}/tasks`).doc(id).update(values);
+        firestore.collection(`boards/${boardId}/tasks`).doc(id)
+            .update(values)
+            .then(() => showSuccessToast(`${values.name} updated.`))
+            .catch((error) => showErrorToast(error.message));
     };
 
     const deleteTask = () => {
-        firestore.collection(`boards/${boardId}/tasks`).doc(id).delete();
+        firestore.collection(`boards/${boardId}/tasks`).doc(id)
+            .delete()
+            .then(() => showSuccessToast('Task deleted.'))
+            .catch((error) => showErrorToast(error.message));
     };
 
     const fields = [

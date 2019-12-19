@@ -15,13 +15,13 @@ type OwnProps = {
 
 const BoardItem = ({ board: { name, description, id } }: OwnProps) => (
     <List.Item as={Grid.Column}>
-        <Segment>
+        <Segment className="todo board-item">
             <Header as="h2">
                 <Link to={ROUTES.dynamic.boardTasks(id)}>
                     {name}
                 </Link>
             </Header>
-            {cropText(description)}
+            {cropText(description, 80)}
         </Segment>
     </List.Item>
 );

@@ -10,6 +10,8 @@ import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskList from './TaskList';
 import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
+import { showErrorToast, showSuccessToast } from '../../utils/showToast';
+import HeadTag from '../_common/HeadTag';
 
 
 const Board = () => {
@@ -37,7 +39,10 @@ const Board = () => {
     ]);
 
     const editBoard = (values: EditBoardType) => {
-        firestore.collection('boards').doc(boardId).update(values);
+        firestore.collection('boards').doc(boardId)
+            .update(values)
+            .then(() => showSuccessToast(`${values.name} updated.`))
+            .catch((error) => showErrorToast(error.message));
     };
 
     const deleteBoard = () => {
@@ -45,7 +50,9 @@ const Board = () => {
             .delete()
             .then(() => {
                 history.push(ROUTES.boards);
-            });
+                showSuccessToast('Board deleted.');
+            })
+            .catch((error) => showErrorToast(error.message));
     };
 
     if (!boards || !boards[boardId || '']) {
@@ -76,6 +83,7 @@ const Board = () => {
 
     return (
         <div>
+            <HeadTag title={name} />
             <HeadingWithButtons
                 text={name}
                 buttons={[
