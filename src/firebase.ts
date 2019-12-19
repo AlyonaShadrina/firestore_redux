@@ -5,6 +5,11 @@ import { firebaseConfig } from './config';
 firebase.initializeApp(firebaseConfig);
 
 // enablePersistence for offline pwa
-firebase.firestore().enablePersistence();
+// enablePersistence will crash tests
+if (process.env.NODE_ENV === 'production') {
+    firebase.firestore().enablePersistence();
+} else {
+    firebase.firestore();
+}
 
 export default firebase;
