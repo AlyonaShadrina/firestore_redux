@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
+import { useFirestore, useFirestoreConnect, WhereOptions } from 'react-redux-firebase';
 import { Button, Grid, List } from 'semantic-ui-react';
+import { useLocation } from 'react-router';
 
 import { firebaseAuth, firestoreOrdered } from '../selectors';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
@@ -12,13 +13,18 @@ import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 
 
 const BoardList = () => {
-    const { uid } = useSelector(firebaseAuth);
+    const { uid, email } = useSelector(firebaseAuth);
     const firestore = useFirestore();
     const { boards } = useSelector(firestoreOrdered);
+    const { pathname } = useLocation();
+
+    const isSharedPage = pathname === '/shared';
+    const ownBoards: WhereOptions = ['uid', '==', (uid || '')];
+    const sharedBoards: WhereOptions = ['sharedWith', 'array-contains', (email || '')];
 
     useFirestoreConnect([{
         collection: 'boards',
-        where: ['uid', '==', (uid || '')],
+        where: isSharedPage ? sharedBoards : ownBoards,
     }]);
 
     const add = (values: EditBoardType) => {
@@ -49,7 +55,7 @@ const BoardList = () => {
     return (
         <>
             <HeadingWithButtons
-                text="Boards"
+                text="Your boards"
                 buttons={[
                     <ModalForm
                         onSubmit={add}
@@ -63,7 +69,7 @@ const BoardList = () => {
             />
             <List as={Grid} columns={4} stackable>
                 {boards && boards.map((board) => (
-                    <BoardItem key={board.id} board={board} />
+                    <BoardItem key={board.id} board={board} isSharedPage={isSharedPage} />
                 ))}
             </List>
         </>

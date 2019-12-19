@@ -10,23 +10,23 @@ import TaskItem from './TaskItem';
 import ModalForm from '../_common/ModalForm';
 import { EditTaskType } from '../../types';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
+import ROUTES from '../../routes';
 
 
 const TaskList = () => {
     const { boardId } = useParams();
     const firestore = useFirestore();
     const { uid } = useSelector(firebaseAuth);
-    const tasks = useSelector(firestoreOrdered)[`boards/${boardId}/tasks`];
+    const tasks = useSelector(firestoreOrdered)[ROUTES.dynamic.boardTasks(boardId)];
 
     useFirestoreConnect([
         {
-            collection: `boards/${boardId}/tasks`,
-            where: ['uid', '==', (uid || '')],
+            collection: ROUTES.dynamic.boardTasks(boardId),
         },
     ]);
 
     const add = (values: EditTaskType) => {
-        firestore.collection(`boards/${boardId}/tasks`)
+        firestore.collection(ROUTES.dynamic.boardTasks(boardId))
             .add({ ...values, uid })
             .then(() => showSuccessToast(`${values.name} added.`))
             .catch((error) => showErrorToast(error.message));

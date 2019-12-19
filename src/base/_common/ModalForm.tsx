@@ -86,8 +86,8 @@ const ModalForm = ({
             <Modal.Header>{heading}</Modal.Header>
             <Modal.Content scrolling>
                 {
-                    fields.map((field: FieldProps) => (
-                        <Form.Field key={field.id}>
+                    fields.map((field: FieldProps, i) => (
+                        <Form.Field key={field.id || i}>
                             <label htmlFor={field.id}>
                                 {`${field.label} ${field.required ? '*' : ''}`}
                             </label>

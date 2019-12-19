@@ -50,7 +50,17 @@ const Routes = () => (
             />
             <PrivateRoute
                 exact
+                path={ROUTES.boardsShared}
+                component={Boards}
+            />
+            <PrivateRoute
+                exact
                 path={ROUTES.dynamic.boardTasks()}
+                component={BoardTasks}
+            />
+            <PrivateRoute
+                exact
+                path={ROUTES.dynamic.boardTasks(undefined, true)}
                 component={BoardTasks}
             />
             <Redirect from="/" to={ROUTES.boards} />

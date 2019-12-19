@@ -35,12 +35,17 @@ const TopMenu = () => {
         <Menu>
             <Menu.Item>
                 <Link to={ROUTES.boards}>Boards</Link>
-                {!online && (
+            </Menu.Item>
+            <Menu.Item>
+                <Link to={ROUTES.boardsShared}>Shared</Link>
+            </Menu.Item>
+            {!online && (
+                <Menu.Item>
                     <Label size="mini">
                         offline
                     </Label>
-                )}
-            </Menu.Item>
+                </Menu.Item>
+            )}
             <Menu.Menu position="right">
                 <Menu.Item onClick={logOut}>
                     Logout

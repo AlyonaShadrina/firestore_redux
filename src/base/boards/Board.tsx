@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 
-import { firebaseAuth, firestoreData } from '../selectors';
+import { firestoreData } from '../selectors';
 import ROUTES from '../../routes';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskList from './TaskList';
@@ -17,7 +17,6 @@ import HeadTag from '../_common/HeadTag';
 const Board = () => {
     const { boardId } = useParams();
     const history = useHistory();
-    const { uid } = useSelector(firebaseAuth);
     const { boards } = useSelector(firestoreData);
     const firestore = useFirestore();
 
@@ -29,8 +28,7 @@ const Board = () => {
         //     subcollections: [{ collection: "tasks" }]
         // },
         {
-            collection: `boards/${boardId}/tasks`,
-            where: ['uid', '==', (uid || '')],
+            collection: ROUTES.dynamic.boardTasks(boardId),
         },
         {
             collection: 'boards',
