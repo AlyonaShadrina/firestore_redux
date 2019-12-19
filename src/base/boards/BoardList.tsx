@@ -28,8 +28,14 @@ const BoardList = () => {
     }]);
 
     const add = (values: EditBoardType) => {
+        const sharedArray = values.sharedWith.split(',').map((emailString) => emailString.trim());
         firestore.collection('boards')
-            .add({ ...values, uid })
+            .add({
+                ...values,
+                sharedWith: sharedArray,
+                author: email,
+                uid,
+            })
             .then(() => showSuccessToast(`${values.name} added.`))
             .catch((error) => showErrorToast(error.message));
     };
@@ -49,6 +55,13 @@ const BoardList = () => {
             name: 'description',
             type: 'text',
             label: 'Description',
+        },
+        {
+            id: 'boardShared',
+            placeholder: 'Enter emails (separate with ,)',
+            name: 'sharedWith',
+            type: 'text',
+            label: 'Share with',
         },
     ];
 

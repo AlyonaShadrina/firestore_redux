@@ -2,7 +2,7 @@ import { useHistory, useParams } from 'react-router';
 import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Grid, Modal } from 'semantic-ui-react';
 
 import { firestoreData } from '../selectors';
 import ROUTES from '../../routes';
@@ -57,7 +57,9 @@ const Board = () => {
         return null;
     }
 
-    const { name, description } = boards[boardId || ''];
+    const {
+        name, description, author, sharedWith,
+    } = boards[boardId || ''];
 
     const fields = [
         {
@@ -118,7 +120,23 @@ const Board = () => {
                     />,
                 ]}
             />
-            {description}
+            <Grid columns={2} divided stackable>
+                <Grid.Column>
+                    {description}
+                </Grid.Column>
+                <Grid.Column>
+                    <div>
+                        Created by:
+                        {' '}
+                        {author}
+                    </div>
+                    <div>
+                        Shared with:
+                        {' '}
+                        {sharedWith && sharedWith.join(', ')}
+                    </div>
+                </Grid.Column>
+            </Grid>
             <TaskList />
         </div>
     );

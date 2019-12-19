@@ -8,6 +8,7 @@ export type StateType = {
 export type EditBoardType = {
     name: string;
     description: string;
+    sharedWith: string;
 };
 
 export type EditTaskType = {
