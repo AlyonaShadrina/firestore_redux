@@ -11,6 +11,7 @@ import ModalForm from '../_common/ModalForm';
 import { EditTaskType } from '../../types';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import ROUTES from '../../routes';
+import { languages } from '../../config';
 
 
 const TaskList = () => {
@@ -47,6 +48,18 @@ const TaskList = () => {
             name: 'description',
             type: 'text',
             label: 'Description',
+        },
+        {
+            id: 'taskLanguage',
+            placeholder: 'language',
+            name: 'language',
+            type: 'select',
+            label: 'Language',
+            initialValue: 'plaintext',
+            options: languages.map((lang) => ({
+                label: lang,
+                value: lang,
+            })),
         },
         {
             id: 'taskCode',

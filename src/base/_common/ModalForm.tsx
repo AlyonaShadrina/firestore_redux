@@ -13,6 +13,11 @@ type OwnProps = {
     heading?: string;
 };
 
+type Option = {
+    value: any;
+    label: string;
+};
+
 type FieldProps = {
     name: string;
     type: string;
@@ -21,6 +26,7 @@ type FieldProps = {
     label?: string;
     initialValue?: string;
     required?: boolean;
+    options?: Option[];
 };
 
 const ModalForm = ({
@@ -91,7 +97,7 @@ const ModalForm = ({
                             <label htmlFor={field.id}>
                                 {`${field.label} ${field.required ? '*' : ''}`}
                             </label>
-                            {field.type === 'textarea' ? (
+                            {field.type === 'textarea' && (
                                 <textarea
                                     id={field.id}
                                     placeholder={field.placeholder}
@@ -99,7 +105,21 @@ const ModalForm = ({
                                     onChange={handleChange}
                                     value={values[field.name]}
                                 />
-                            ) : (
+                            )}
+                            {field.type === 'select' && (
+                                <select
+                                    id={field.id}
+                                    placeholder={field.placeholder}
+                                    name={field.name}
+                                    onChange={handleChange}
+                                    value={values[field.name]}
+                                >
+                                    {field.options && field.options.map((option, i) => (
+                                        <option key={i} value={option.value}>{option.label}</option>
+                                    ))}
+                                </select>
+                            )}
+                            {(field.type !== 'select' && field.type !== 'textarea') && (
                                 <input
                                     id={field.id}
                                     placeholder={field.placeholder}

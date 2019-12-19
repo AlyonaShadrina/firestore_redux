@@ -15,6 +15,7 @@ export type EditTaskType = {
     name: string;
     description: string;
     code?: string;
+    language?: string;
 };
 
 export type BoardType = EditBoardType & {

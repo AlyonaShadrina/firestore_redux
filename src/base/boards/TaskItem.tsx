@@ -12,6 +12,7 @@ import ModalForm from '../_common/ModalForm';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 import ROUTES from '../../routes';
+import { languages } from '../../config';
 
 
 type OwnProps = {
@@ -21,7 +22,7 @@ type OwnProps = {
 
 const TaskItem = ({
     tasksId, task: {
-        name, description, id, code,
+        name, description, id, code, language = 'plaintext',
     },
 }: OwnProps) => {
     const { boardId } = useParams();
@@ -56,6 +57,17 @@ const TaskItem = ({
             type: 'text',
             label: 'Description',
             initialValue: description,
+        },
+        {
+            placeholder: 'language',
+            name: 'language',
+            type: 'select',
+            label: 'Language',
+            initialValue: language,
+            options: languages.map((lang) => ({
+                label: lang,
+                value: lang,
+            })),
         },
         {
             placeholder: 'code',
@@ -112,7 +124,7 @@ const TaskItem = ({
                     />
                     <div>{description}</div>
                     {code && (
-                        <SyntaxHighlighter language="javascript" style={androidstudio}>
+                        <SyntaxHighlighter language={language} style={androidstudio} showLineNumbers>
                             {code}
                         </SyntaxHighlighter>
                     )}
