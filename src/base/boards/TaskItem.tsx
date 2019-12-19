@@ -4,6 +4,8 @@ import {
 import React from 'react';
 import { useFirestore } from 'react-redux-firebase';
 import { useParams } from 'react-router';
+import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { androidstudio } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { EditTaskType, TaskType } from '../../types';
 import ModalForm from '../_common/ModalForm';
@@ -17,7 +19,11 @@ type OwnProps = {
     task: TaskType;
 };
 
-const TaskItem = ({ tasksId, task: { name, description, id } }: OwnProps) => {
+const TaskItem = ({
+    tasksId, task: {
+        name, description, id, code,
+    },
+}: OwnProps) => {
     const { boardId } = useParams();
     const firestore = useFirestore();
 
@@ -50,6 +56,13 @@ const TaskItem = ({ tasksId, task: { name, description, id } }: OwnProps) => {
             type: 'text',
             label: 'Description',
             initialValue: description,
+        },
+        {
+            placeholder: 'code',
+            name: 'code',
+            type: 'textarea',
+            label: 'Code',
+            initialValue: code,
         },
     ];
 
@@ -98,6 +111,11 @@ const TaskItem = ({ tasksId, task: { name, description, id } }: OwnProps) => {
                         ]}
                     />
                     <div>{description}</div>
+                    {code && (
+                        <SyntaxHighlighter language="javascript" style={androidstudio}>
+                            {code}
+                        </SyntaxHighlighter>
+                    )}
                 </Segment>
             </List.Item>
         )

@@ -91,14 +91,24 @@ const ModalForm = ({
                             <label htmlFor={field.id}>
                                 {`${field.label} ${field.required ? '*' : ''}`}
                             </label>
-                            <input
-                                id={field.id}
-                                placeholder={field.placeholder}
-                                name={field.name}
-                                type={field.type}
-                                onChange={handleChange}
-                                value={values[field.name]}
-                            />
+                            {field.type === 'textarea' ? (
+                                <textarea
+                                    id={field.id}
+                                    placeholder={field.placeholder}
+                                    name={field.name}
+                                    onChange={handleChange}
+                                    value={values[field.name]}
+                                />
+                            ) : (
+                                <input
+                                    id={field.id}
+                                    placeholder={field.placeholder}
+                                    name={field.name}
+                                    type={field.type}
+                                    onChange={handleChange}
+                                    value={values[field.name]}
+                                />
+                            )}
                         </Form.Field>
                     ))
                 }

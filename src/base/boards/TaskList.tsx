@@ -48,6 +48,13 @@ const TaskList = () => {
             type: 'text',
             label: 'Description',
         },
+        {
+            id: 'taskCode',
+            placeholder: 'code',
+            name: 'code',
+            type: 'textarea',
+            label: 'Code',
+        },
     ];
 
     return (
@@ -66,7 +73,7 @@ const TaskList = () => {
                     />,
                 ]}
             />
-            <List as={Grid} columns={4} stackable>
+            <List as={Grid} columns={1} stackable>
                 {tasks && tasks.map((task) => (
                     <TaskItem task={task} key={task.id} tasksId="tasksId" />
                 ))}
