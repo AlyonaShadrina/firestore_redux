@@ -12,3 +12,9 @@ a {
 .todo.board-item {
     min-height: 110px;
 }
+
+.todo.meta {
+    opacity: .7;
+    font-size: .8rem;
+    margin-bottom: .5rem;
+}

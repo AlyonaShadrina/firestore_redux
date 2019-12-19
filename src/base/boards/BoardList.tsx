@@ -68,8 +68,8 @@ const BoardList = () => {
     return (
         <>
             <HeadingWithButtons
-                text="Your boards"
-                buttons={[
+                text={`${isSharedPage ? 'Shared' : 'Your'} boards`}
+                buttons={isSharedPage ? [] : [
                     <ModalForm
                         onSubmit={add}
                         button={<Button circular icon="add" primary />}

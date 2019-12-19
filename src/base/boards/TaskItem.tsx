@@ -22,7 +22,7 @@ type OwnProps = {
 
 const TaskItem = ({
     tasksId, task: {
-        name, description, id, code, language = 'plaintext',
+        name, description, id, code, language = 'plaintext', author,
     },
 }: OwnProps) => {
     const { boardId } = useParams();
@@ -122,9 +122,14 @@ const TaskItem = ({
                             />,
                         ]}
                     />
+                    <div className="todo meta">{author}</div>
                     <div>{description}</div>
                     {code && (
-                        <SyntaxHighlighter language={language} style={androidstudio} showLineNumbers>
+                        <SyntaxHighlighter
+                            language={language}
+                            style={androidstudio}
+                            showLineNumbers
+                        >
                             {code}
                         </SyntaxHighlighter>
                     )}

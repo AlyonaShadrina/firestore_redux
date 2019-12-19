@@ -14,7 +14,11 @@ type OwnProps = {
     isSharedPage?: boolean;
 };
 
-const BoardItem = ({ board: { name, description, id }, isSharedPage }: OwnProps) => (
+const BoardItem = ({
+    board: {
+        name, description, id, author,
+    }, isSharedPage,
+}: OwnProps) => (
     <List.Item as={Grid.Column}>
         <Segment className="todo board-item">
             <Header as="h2">
@@ -22,6 +26,9 @@ const BoardItem = ({ board: { name, description, id }, isSharedPage }: OwnProps)
                     {name}
                 </Link>
             </Header>
+            {isSharedPage && (
+                <div className="todo meta">{author}</div>
+            )}
             {cropText(description, 80)}
         </Segment>
     </List.Item>

@@ -17,7 +17,7 @@ import { languages } from '../../config';
 const TaskList = () => {
     const { boardId } = useParams();
     const firestore = useFirestore();
-    const { uid } = useSelector(firebaseAuth);
+    const { uid, email } = useSelector(firebaseAuth);
     const tasks = useSelector(firestoreOrdered)[ROUTES.dynamic.boardTasks(boardId)];
 
     useFirestoreConnect([
@@ -28,7 +28,7 @@ const TaskList = () => {
 
     const add = (values: EditTaskType) => {
         firestore.collection(ROUTES.dynamic.boardTasks(boardId))
-            .add({ ...values, uid })
+            .add({ ...values, uid, author: email })
             .then(() => showSuccessToast(`${values.name} added.`))
             .catch((error) => showErrorToast(error.message));
     };

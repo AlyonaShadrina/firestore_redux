@@ -21,9 +21,11 @@ export type EditTaskType = {
 export type BoardType = EditBoardType & {
     uid: string;
     id?: string;
+    author?: string;
 };
 
 export type TaskType = EditTaskType & {
     uid: string;
     id?: string;
+    author?: string;
 };
