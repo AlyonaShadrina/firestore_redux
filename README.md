@@ -1,5 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Via Docker
+Be sure to have you 3000 port free.
+
+```
+docker image build -t react:app .
+```
+```
+docker container run -it -p 3000:3000 -p 35729:35729 -v $(pwd):/app react:app
+```
+<sup>P.S. On Windows you could run into some issues with `pwd`.</sup>
+
 ## Available Scripts
 
 In the project directory, you can run:
