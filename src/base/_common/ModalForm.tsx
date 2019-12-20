@@ -78,6 +78,51 @@ const ModalForm = ({
         isInitialValid: false,
     });
 
+    const switchField = (field: FieldProps) => {
+        // switch case has eslint issues
+        if (field.type === 'textarea') {
+            return (
+                <textarea
+                    id={field.id}
+                    placeholder={field.placeholder}
+                    name={field.name}
+                    onChange={handleChange}
+                    value={values[field.name]}
+                />
+            );
+        }
+        if (field.type === 'select') {
+            return (
+                <select
+                    id={field.id}
+                    placeholder={field.placeholder}
+                    name={field.name}
+                    onChange={handleChange}
+                    value={values[field.name]}
+                >
+                    {field.options && field.options.map((option) => (
+                        <option
+                            key={option.value}
+                            value={option.value}
+                        >
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            );
+        }
+        return (
+            <input
+                id={field.id}
+                placeholder={field.placeholder}
+                name={field.name}
+                type={field.type}
+                onChange={handleChange}
+                value={values[field.name]}
+            />
+        );
+    };
+
     return (
         <Modal
             trigger={button}
@@ -91,47 +136,14 @@ const ModalForm = ({
         >
             <Modal.Header>{heading}</Modal.Header>
             <Modal.Content scrolling>
-                {
-                    fields.map((field: FieldProps, i) => (
-                        <Form.Field key={field.id || i}>
-                            <label htmlFor={field.id}>
-                                {`${field.label} ${field.required ? '*' : ''}`}
-                            </label>
-                            {field.type === 'textarea' && (
-                                <textarea
-                                    id={field.id}
-                                    placeholder={field.placeholder}
-                                    name={field.name}
-                                    onChange={handleChange}
-                                    value={values[field.name]}
-                                />
-                            )}
-                            {field.type === 'select' && (
-                                <select
-                                    id={field.id}
-                                    placeholder={field.placeholder}
-                                    name={field.name}
-                                    onChange={handleChange}
-                                    value={values[field.name]}
-                                >
-                                    {field.options && field.options.map((option, i) => (
-                                        <option key={i} value={option.value}>{option.label}</option>
-                                    ))}
-                                </select>
-                            )}
-                            {(field.type !== 'select' && field.type !== 'textarea') && (
-                                <input
-                                    id={field.id}
-                                    placeholder={field.placeholder}
-                                    name={field.name}
-                                    type={field.type}
-                                    onChange={handleChange}
-                                    value={values[field.name]}
-                                />
-                            )}
-                        </Form.Field>
-                    ))
-                }
+                {fields.map((field: FieldProps, i) => (
+                    <Form.Field key={field.id || i}>
+                        <label htmlFor={field.id}>
+                            {`${field.label} ${field.required ? '*' : ''}`}
+                        </label>
+                        {switchField(field)}
+                    </Form.Field>
+                ))}
             </Modal.Content>
             <Modal.Actions>
                 <Button

@@ -86,11 +86,9 @@ const Board = () => {
             name: 'sharedWith',
             type: 'text',
             label: 'Share with',
-            initialValue: (sharedWith || []).join(', ')
+            initialValue: (sharedWith || []).join(', '),
         },
     ];
-
-
 
     return (
         <div>

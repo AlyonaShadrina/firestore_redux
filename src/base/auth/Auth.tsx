@@ -63,11 +63,6 @@ const LoginPage = () => {
             .login({ provider: 'google', type: 'popup' })
             .catch((error) => showErrorToast(error.message))
     );
-    // const loginWithFacebook = () => (
-    //     firebase
-    //         .login({ provider: 'facebook', type: 'popup' })
-    //         .catch((error) => showErrorToast(error.message))
-    // );
 
     if (!isLoaded) {
         return <Dimmer active><Loader /></Dimmer>;
@@ -112,10 +107,6 @@ const LoginPage = () => {
                         <Icon name="google" />
                         Login with Google
                     </Button>
-                    {/*<Button onClick={loginWithFacebook}>*/}
-                    {/*    <Icon name="facebook" />*/}
-                    {/*    Login with Facebook*/}
-                    {/*</Button>*/}
                 </Grid.Column>
             </Grid>
         </Segment>
