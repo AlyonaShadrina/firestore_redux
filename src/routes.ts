@@ -3,7 +3,7 @@ const ROUTES = {
     boardsShared: '/shared',
     login: '/login',
     dynamic: {
-        boardTasks: (boardId = ':boardId', shared = false) => `/boards${shared ? '/shared' : ''}/${boardId}/tasks`,
+        boardTasks: (boardId = ':boardId', shared = false) => `/boards${shared ? '/shared' : ''}/${boardId}/snippets`,
     },
 };
 

@@ -73,7 +73,7 @@ const TaskList = () => {
     return (
         <>
             <HeadingWithButtons
-                text="Tasks"
+                text="Snippets"
                 tag="h2"
                 buttons={[
                     <ModalForm
@@ -81,7 +81,7 @@ const TaskList = () => {
                         button={<Button circular icon="add" primary />}
                         submitButtonText="Add"
                         fields={fields}
-                        heading="Add new task"
+                        heading="Add new snippet"
                         key="Add"
                     />,
                 ]}
