@@ -135,14 +135,14 @@ const Board = () => {
                 <Grid.Column>
                     {description}
                 </Grid.Column>
-                <Grid.Column>
+                <Grid.Column className="todo meta text-default">
                     <div>
-                        Created by:
+                        <strong>Created by:</strong>
                         {' '}
                         {author}
                     </div>
                     <div>
-                        Shared with:
+                        <strong>Shared with:</strong>
                         {' '}
                         {sharedWith && sharedWith.join(', ')}
                     </div>

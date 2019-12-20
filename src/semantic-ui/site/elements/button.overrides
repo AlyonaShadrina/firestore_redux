@@ -14,4 +14,9 @@
 .ui.inverted.primary.button {
     box-shadow: 0px 0px 0px 2px @primaryColor inset !important;
     color: @primaryColor !important;
+
+    &:hover, &:focus {
+        background: @primaryColor !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
 }

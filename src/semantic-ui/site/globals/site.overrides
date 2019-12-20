@@ -9,6 +9,10 @@ a {
     }
 }
 
+.todo.heading-with-buttons {
+    margin-bottom: 0 !important;
+}
+
 .todo.board-item {
     min-height: 110px;
 }
@@ -17,4 +21,11 @@ a {
     opacity: .7;
     font-size: .8rem;
     margin-bottom: .5rem;
+}
+
+.todo.text-default {
+    color: @textColor;
+}
+.todo.text-primary {
+    color: @primaryColor !important;
 }
