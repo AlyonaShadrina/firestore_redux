@@ -3,7 +3,10 @@ import {
     Button, Form, Modal,
 } from 'semantic-ui-react';
 import { useFormik } from 'formik';
+import AceEditor from 'react-ace';
 
+// import "ace-builds/src-noconflict/mode-java";
+// import "ace-builds/src-noconflict/theme-github";
 
 type OwnProps = {
     onSubmit: (arg0: any) => void;
@@ -86,6 +89,22 @@ const ModalForm = ({
                     id={field.id}
                     placeholder={field.placeholder}
                     name={field.name}
+                    onChange={handleChange}
+                    value={values[field.name]}
+                />
+            );
+        }
+        if (field.type === 'code') {
+            // @ts-ignore
+            ace.config.set('basePath', 'path')
+
+            return (
+                <AceEditor
+                    mode={values.language}
+                    // theme="github"
+                    // onChange={onChange}
+                    name="UNIQUE_ID_OF_DIV"
+                    editorProps={{ $blockScrolling: true }}
                     onChange={handleChange}
                     value={values[field.name]}
                 />

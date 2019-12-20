@@ -3,6 +3,8 @@ import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import { Button, Grid, Modal } from 'semantic-ui-react';
+import AceEditor from "react-ace";
+
 
 import { firestoreData } from '../selectors';
 import ROUTES from '../../routes';
@@ -65,6 +67,10 @@ const Board = () => {
     const {
         name, description, author, sharedWith,
     } = boards[boardId || ''];
+
+    const onChange = (newValue: any) => {
+        console.log("change", newValue);
+    }
 
     const fields = [
         {
@@ -134,6 +140,13 @@ const Board = () => {
                         />
                     ) : null),
                 ]}
+            />
+            <AceEditor
+                mode="java"
+                theme="github"
+                onChange={onChange}
+                name="UNIQUE_ID_OF_DIV"
+                editorProps={{ $blockScrolling: true }}
             />
             <Grid columns={2} divided stackable>
                 <Grid.Column>

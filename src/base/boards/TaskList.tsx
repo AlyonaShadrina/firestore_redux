@@ -65,7 +65,7 @@ const TaskList = () => {
             id: 'taskCode',
             placeholder: 'code',
             name: 'code',
-            type: 'textarea',
+            type: 'code',
             label: 'Code',
         },
     ];
