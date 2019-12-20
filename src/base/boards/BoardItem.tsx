@@ -11,18 +11,26 @@ import { BoardType } from '../../types';
 
 type OwnProps = {
     board: BoardType;
+    isSharedPage?: boolean;
 };
 
-const BoardItem = ({ board: { name, description, id } }: OwnProps) => (
+const BoardItem = ({
+    board: {
+        name, description, id, author,
+    }, isSharedPage,
+}: OwnProps) => (
     <List.Item as={Grid.Column}>
-        <Segment className="todo board-item">
-            <Header as="h2">
-                <Link to={ROUTES.dynamic.boardTasks(id)}>
+        <Link to={ROUTES.dynamic.boardTasks(id, isSharedPage)}>
+            <Segment className="todo board-item">
+                <Header as="h2" className="todo text-primary">
                     {name}
-                </Link>
-            </Header>
-            {cropText(description, 80)}
-        </Segment>
+                </Header>
+                {isSharedPage && (
+                    <div className="todo meta text-default">{author}</div>
+                )}
+                <div className="todo text-default">{cropText(description, 80)}</div>
+            </Segment>
+        </Link>
     </List.Item>
 );
 

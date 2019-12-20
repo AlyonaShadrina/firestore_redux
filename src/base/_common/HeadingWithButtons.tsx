@@ -9,7 +9,7 @@ type OwnProps = {
 
 const HeadingWithButtons = ({ text, buttons, tag = 'h1' }: OwnProps) => (
     <Grid style={{ paddingTop: '1.125em', paddingBottom: '1.125em' }}>
-        <Header as={tag}>
+        <Header as={tag} className="todo heading-with-buttons">
             {text}
         </Header>
         <div>

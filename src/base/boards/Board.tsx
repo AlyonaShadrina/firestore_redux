@@ -1,10 +1,10 @@
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import { useFirestore, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Grid, Modal } from 'semantic-ui-react';
 
-import { firebaseAuth, firestoreData } from '../selectors';
+import { firestoreData } from '../selectors';
 import ROUTES from '../../routes';
 import HeadingWithButtons from '../_common/HeadingWithButtons';
 import TaskList from './TaskList';
@@ -12,14 +12,17 @@ import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
 import { showErrorToast, showSuccessToast } from '../../utils/showToast';
 import HeadTag from '../_common/HeadTag';
+import isShared from '../../utils/isShared';
 
 
 const Board = () => {
     const { boardId } = useParams();
     const history = useHistory();
-    const { uid } = useSelector(firebaseAuth);
     const { boards } = useSelector(firestoreData);
     const firestore = useFirestore();
+
+    const { pathname } = useLocation();
+    const isSharedPage = isShared(pathname);
 
     useFirestoreConnect([
         // {
@@ -29,8 +32,7 @@ const Board = () => {
         //     subcollections: [{ collection: "tasks" }]
         // },
         {
-            collection: `boards/${boardId}/tasks`,
-            where: ['uid', '==', (uid || '')],
+            collection: ROUTES.dynamic.boardTasks(boardId),
         },
         {
             collection: 'boards',
@@ -39,8 +41,9 @@ const Board = () => {
     ]);
 
     const editBoard = (values: EditBoardType) => {
+        const sharedArray = values.sharedWith.split(',').map((emailString) => emailString.trim());
         firestore.collection('boards').doc(boardId)
-            .update(values)
+            .update({ ...values, sharedWith: sharedArray })
             .then(() => showSuccessToast(`${values.name} updated.`))
             .catch((error) => showErrorToast(error.message));
     };
@@ -59,7 +62,9 @@ const Board = () => {
         return null;
     }
 
-    const { name, description } = boards[boardId || ''];
+    const {
+        name, description, author, sharedWith,
+    } = boards[boardId || ''];
 
     const fields = [
         {
@@ -79,6 +84,14 @@ const Board = () => {
             label: 'Description',
             initialValue: description,
         },
+        {
+            id: 'boardShared',
+            placeholder: 'Enter emails (separate with ,)',
+            name: 'sharedWith',
+            type: 'text',
+            label: 'Share with',
+            initialValue: (sharedWith || []).join(', '),
+        },
     ];
 
     return (
@@ -95,32 +108,50 @@ const Board = () => {
                         heading="Edit board"
                         key="edit"
                     />,
-                    <Modal
-                        basic
-                        size="small"
-                        trigger={<Button circular icon="delete" />}
-                        header="Are you sure?"
-                        content="This action is irreversible"
-                        actions={[
-                            {
-                                basic: true,
-                                inverted: true,
-                                content: 'Cancel',
-                            },
-                            {
-                                basic: true,
-                                color: 'red',
-                                key: 'done',
-                                content: 'Delete',
-                                onClick: deleteBoard,
-                            },
-                        ]}
-                        icon="delete"
-                        key="delete"
-                    />,
+                    (!isSharedPage ? (
+                        <Modal
+                            basic
+                            size="small"
+                            trigger={<Button circular icon="delete" />}
+                            header="Are you sure?"
+                            content="This action is irreversible"
+                            actions={[
+                                {
+                                    basic: true,
+                                    inverted: true,
+                                    content: 'Cancel',
+                                },
+                                {
+                                    basic: true,
+                                    color: 'red',
+                                    key: 'done',
+                                    content: 'Delete',
+                                    onClick: deleteBoard,
+                                },
+                            ]}
+                            icon="delete"
+                            key="delete"
+                        />
+                    ) : null),
                 ]}
             />
-            {description}
+            <Grid columns={2} divided stackable>
+                <Grid.Column>
+                    {description}
+                </Grid.Column>
+                <Grid.Column className="todo meta text-default">
+                    <div>
+                        <strong>Created by:</strong>
+                        {' '}
+                        {author}
+                    </div>
+                    <div>
+                        <strong>Shared with:</strong>
+                        {' '}
+                        {sharedWith && sharedWith.join(', ')}
+                    </div>
+                </Grid.Column>
+            </Grid>
             <TaskList />
         </div>
     );

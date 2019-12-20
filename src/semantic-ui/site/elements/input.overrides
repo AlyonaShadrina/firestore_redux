@@ -6,6 +6,8 @@
 @primaryColor: #69f0ae;
 
 .ui.form input,
+.ui.form textarea,
+.ui.form select,
 .ui.form input[type="text"],
 .ui.form input[type="password"] {
     background: @background !important;

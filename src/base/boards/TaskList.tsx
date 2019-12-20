@@ -10,24 +10,25 @@ import TaskItem from './TaskItem';
 import ModalForm from '../_common/ModalForm';
 import { EditTaskType } from '../../types';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
+import ROUTES from '../../routes';
+import { languages } from '../../config';
 
 
 const TaskList = () => {
     const { boardId } = useParams();
     const firestore = useFirestore();
-    const { uid } = useSelector(firebaseAuth);
-    const tasks = useSelector(firestoreOrdered)[`boards/${boardId}/tasks`];
+    const { uid, email } = useSelector(firebaseAuth);
+    const tasks = useSelector(firestoreOrdered)[ROUTES.dynamic.boardTasks(boardId)];
 
     useFirestoreConnect([
         {
-            collection: `boards/${boardId}/tasks`,
-            where: ['uid', '==', (uid || '')],
+            collection: ROUTES.dynamic.boardTasks(boardId),
         },
     ]);
 
     const add = (values: EditTaskType) => {
-        firestore.collection(`boards/${boardId}/tasks`)
-            .add({ ...values, uid })
+        firestore.collection(ROUTES.dynamic.boardTasks(boardId))
+            .add({ ...values, uid, author: email })
             .then(() => showSuccessToast(`${values.name} added.`))
             .catch((error) => showErrorToast(error.message));
     };
@@ -48,12 +49,31 @@ const TaskList = () => {
             type: 'text',
             label: 'Description',
         },
+        {
+            id: 'taskLanguage',
+            placeholder: 'language',
+            name: 'language',
+            type: 'select',
+            label: 'Language',
+            initialValue: 'plaintext',
+            options: languages.map((lang) => ({
+                label: lang,
+                value: lang,
+            })),
+        },
+        {
+            id: 'taskCode',
+            placeholder: 'code',
+            name: 'code',
+            type: 'textarea',
+            label: 'Code',
+        },
     ];
 
     return (
         <>
             <HeadingWithButtons
-                text="Tasks"
+                text="Snippets"
                 tag="h2"
                 buttons={[
                     <ModalForm
@@ -61,12 +81,12 @@ const TaskList = () => {
                         button={<Button circular icon="add" primary />}
                         submitButtonText="Add"
                         fields={fields}
-                        heading="Add new task"
+                        heading="Add new snippet"
                         key="Add"
                     />,
                 ]}
             />
-            <List as={Grid} columns={4} stackable>
+            <List as={Grid} columns={1} stackable>
                 {tasks && tasks.map((task) => (
                     <TaskItem task={task} key={task.id} tasksId="tasksId" />
                 ))}

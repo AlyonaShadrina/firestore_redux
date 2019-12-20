@@ -1,3 +1,8 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.stackable.divided:not(.vertically).grid > .column:not(.row) {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
