@@ -10,6 +10,7 @@ import BoardItem from './BoardItem';
 import ModalForm from '../_common/ModalForm';
 import { EditBoardType } from '../../types';
 import { showErrorToast, showSuccessToast } from '../../utils/showToast';
+import isShared from '../../utils/isShared';
 
 
 const BoardList = () => {
@@ -18,7 +19,8 @@ const BoardList = () => {
     const { boards } = useSelector(firestoreOrdered);
     const { pathname } = useLocation();
 
-    const isSharedPage = pathname === '/shared';
+    const isSharedPage = isShared(pathname);
+
     const ownBoards: WhereOptions = ['uid', '==', (uid || '')];
     const sharedBoards: WhereOptions = ['sharedWith', 'array-contains', (email || '')];
 
