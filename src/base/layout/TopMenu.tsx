@@ -38,30 +38,24 @@ const TopMenu = () => {
     const [isDarkTheme, toggleTheme] = useTheme({
         dark: {
             '--primaryColor': '#69f0ae',
-
             '--pageBackground': 'rgb(22, 22, 22)',
             '--background': '#000a12',
             '--backgroundButton': 'rgb(22, 22, 22)',
             '--backgroundMenu': 'rgb(22, 22, 22)',
             '--backgroundSegment': '#1d1e22',
             '--backgroundMessage': '#161616',
-
             '--segmentShadow': '0 4px 30px rgba(0, 0, 0, 0.5)',
-
             '--textColor': 'rgb(220, 220, 220)',
         },
         light: {
             '--primaryColor': '#69f0ae',
-
             '--pageBackground': 'rgb(241, 241, 241)',
             '--background': 'rgb(120, 120, 120)',
             '--backgroundButton': 'rgb(241, 241, 241)',
             '--backgroundMenu': 'rgb(241, 241, 241)',
             '--backgroundSegment': 'rgb(250, 250, 250)',
             '--backgroundMessage': '#161616',
-
             '--segmentShadow': '0 3px 13px rgba(0, 0, 0, 0.2)',
-
             '--textColor': 'rgb(20, 20, 20)',
         },
     });

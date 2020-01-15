@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { getCookie, setCookie } from '../utils/cookie';
+import { themeCookie } from '../config';
 
 type Themes = {
     light?: {
@@ -10,7 +12,7 @@ type Themes = {
 };
 
 const useTheme = ({ light, dark }: Themes): [boolean, () => void] => {
-    const darkPreference = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const darkPreference = getCookie(themeCookie) === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     const [isDark, setDark] = useState(darkPreference);
 
@@ -20,11 +22,13 @@ const useTheme = ({ light, dark }: Themes): [boolean, () => void] => {
                 document.documentElement.style.setProperty(`${prop}`, dark[prop]);
                 return null;
             });
+            setCookie(themeCookie, 'dark');
         } else if (!isDark && light) {
             Object.keys(light).map((prop: string) => {
                 document.documentElement.style.setProperty(`${prop}`, light[prop]);
                 return null;
             });
+            setCookie(themeCookie, 'light');
         }
         // TODO: save default values
     }, [dark, isDark, light]);
