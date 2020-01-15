@@ -2,20 +2,18 @@
          Site Overrides
 *******************************/
 
-@background: rgb(22, 22, 22);
-@primaryColor: #69f0ae;
-
 .ui.form input,
 .ui.form textarea,
 .ui.form select,
 .ui.form input[type="text"],
 .ui.form input[type="password"] {
-    background: @background !important;
-    color: rgba(255,255,255, 1) !important;
+    background: var(--pageBackground) !important;
+    color: var(--textColor) !important;
     &:focus {
-        border-color: @primaryColor !important;
+        border-color: var(--primaryColor) !important;
     }
     &::placeholder {
-      color: rgba(255,255,255, .7);
+      color: var(--textColor);
+      opacity: .8;
     }
 }

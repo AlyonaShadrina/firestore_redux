@@ -2,10 +2,15 @@
          Site Overrides
 *******************************/
 
+body {
+    color: var(--textColor);
+    background-color: var(--pageBackground);
+}
+
 a {
-    color: @primaryColor;
+    color: var(--primaryColor);
     &:hover {
-        color: @primaryColor;
+        color: var(--primaryColor);
     }
 }
 
@@ -24,8 +29,8 @@ a {
 }
 
 .todo.text-default {
-    color: @textColor;
+    color: var(--textColor);
 }
 .todo.text-primary {
-    color: @primaryColor !important;
+    color: var(--primaryColor) !important;
 }
