@@ -2,29 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Label, Menu } from 'semantic-ui-react';
 import { useFirebase } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
+
 import ROUTES from '../../routes';
+import useTheme from '../../hooks/useTheme';
 
-
-const useTheme = (): [boolean, () => void] => {
-
-    const darkPreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    const [isDark, setDark] = useState(darkPreference);
-
-    useEffect(() => {
-        if (isDark) {
-            document.documentElement.style.setProperty('--primaryColor', 'darkblue');
-        } else {
-            document.documentElement.style.setProperty('--primaryColor', 'lightblue');
-        }
-    }, [isDark]);
-
-    const changeTheme = () => {
-        setDark(!isDark);
-    };
-
-    return [isDark, changeTheme];
-};
 
 const TopMenu = () => {
     const firebase = useFirebase();
@@ -54,11 +35,11 @@ const TopMenu = () => {
     }, [memoizedSubscribeOnline, memoizedUnsubscribeOnline]);
 
 
-    const [isDarkTheme, toggleTheme] = useTheme();
-
-    useEffect(() => {
-        console.log('isDarkTheme', isDarkTheme);
-    }, [isDarkTheme])
+    const [isDarkTheme, toggleTheme] = useTheme({
+        dark: {
+            primaryColor: 'darkblue',
+        },
+    });
 
     const handleThemeChange = () => {
         toggleTheme();
