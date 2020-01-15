@@ -2,10 +2,6 @@
         Site Overrides
 *******************************/
 
-@primaryColor: #69f0ae;
-@pageBackground: rgb(22, 22, 22);
-@background: #161616;
-
 .ui-alerts.top-right {
     @media (max-width: 600px) {
         top: 10px !important;
@@ -30,15 +26,15 @@
     }
 
     &.error, &.success {
-        background: @background;
+        background: var(--backgroundMessage);
         border: none;
         box-shadow: 0 4px 30px rgba(0,0,0,.5);
     }
 
     &.success {
-        color: @primaryColor;
+        color: var(--primaryColor);
         & .header {
-            color: @primaryColor;
+            color: var(--primaryColor);
         }
     }
 }

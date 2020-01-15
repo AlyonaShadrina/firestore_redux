@@ -1,3 +1,11 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.header {
+    color: var(--textColor);
+}
+
+.ui.list > .item .header {
+    color: var(--textColor) !important;
+}

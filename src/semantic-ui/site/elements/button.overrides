@@ -2,21 +2,31 @@
          Site Overrides
 *******************************/
 
+.ui.button {
+    background-color: var(--backgroundButton);
+}
+
+.ui.primary.button {
+    background-color: var(--primaryColor);
+    &:hover, &:focus {
+        background-color: var(--primaryColor);
+    }
+}
 
 .ui.button:not(.primary), .ui.basic.button {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: var(--textColor) !important;
     &:hover, &:focus {
-        background: @background !important;
-        color: rgba(255, 255, 255, 0.9) !important;
+        background: var(--background) !important;
+        color: var(--textColor) !important;
     }
 }
 
 .ui.inverted.primary.button {
-    box-shadow: 0px 0px 0px 2px @primaryColor inset !important;
-    color: @primaryColor !important;
+    box-shadow: 0px 0px 0px 2px var(--primaryColor) inset !important;
+    color: var(--primaryColor) !important;
 
     &:hover, &:focus {
-        background: @primaryColor !important;
+        background: var(--primaryColor) !important;
         color: rgba(255, 255, 255, 0.9) !important;
     }
 }
