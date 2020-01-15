@@ -4,6 +4,28 @@ import { useFirebase } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import ROUTES from '../../routes';
 
+
+const useTheme = (): [boolean, () => void] => {
+
+    const darkPreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    const [isDark, setDark] = useState(darkPreference);
+
+    useEffect(() => {
+        if (isDark) {
+            document.documentElement.style.setProperty('--primaryColor', 'darkblue');
+        } else {
+            document.documentElement.style.setProperty('--primaryColor', 'lightblue');
+        }
+    }, [isDark]);
+
+    const changeTheme = () => {
+        setDark(!isDark);
+    };
+
+    return [isDark, changeTheme];
+};
+
 const TopMenu = () => {
     const firebase = useFirebase();
 
@@ -31,6 +53,17 @@ const TopMenu = () => {
         return memoizedUnsubscribeOnline;
     }, [memoizedSubscribeOnline, memoizedUnsubscribeOnline]);
 
+
+    const [isDarkTheme, toggleTheme] = useTheme();
+
+    useEffect(() => {
+        console.log('isDarkTheme', isDarkTheme);
+    }, [isDarkTheme])
+
+    const handleThemeChange = () => {
+        toggleTheme();
+    };
+
     return (
         <Menu>
             <Menu.Item>
@@ -38,6 +71,9 @@ const TopMenu = () => {
             </Menu.Item>
             <Menu.Item>
                 <Link to={ROUTES.boardsShared}>Shared</Link>
+            </Menu.Item>
+            <Menu.Item>
+                <input type="checkbox" onChange={handleThemeChange} checked={isDarkTheme} />
             </Menu.Item>
             {!online && (
                 <Menu.Item>
