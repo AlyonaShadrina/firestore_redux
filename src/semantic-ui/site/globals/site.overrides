@@ -34,3 +34,12 @@ a {
 .todo.text-primary {
     color: var(--primaryColor) !important;
 }
+
+.todo.toggle-theme {
+    transform: scale(.6);
+}
+.todo.toggle-theme-label {
+    @media all and (max-width: 600px) {
+        display: none;
+   }
+}

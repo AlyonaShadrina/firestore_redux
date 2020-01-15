@@ -17,12 +17,12 @@ const useTheme = ({ light, dark }: Themes): [boolean, () => void] => {
     useEffect(() => {
         if (isDark && dark) {
             Object.keys(dark).map((prop: string) => {
-                document.documentElement.style.setProperty(`--${prop}`, dark[prop]);
+                document.documentElement.style.setProperty(`${prop}`, dark[prop]);
                 return null;
             });
         } else if (!isDark && light) {
             Object.keys(light).map((prop: string) => {
-                document.documentElement.style.setProperty(`--${prop}`, light[prop]);
+                document.documentElement.style.setProperty(`${prop}`, light[prop]);
                 return null;
             });
         }

@@ -16,6 +16,14 @@
        &:before {
            background: transparent;
        }
+
+       @media all and (max-width: 600px) {
+            padding-right: .4rem;
+            padding-left: .4rem;
+            & > .label {
+                margin-left: 0;
+            }
+       }
     }
     a.item:hover {
       color: var(--primaryColor) !important;
